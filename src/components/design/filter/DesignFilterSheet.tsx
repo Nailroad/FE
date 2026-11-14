@@ -3,8 +3,9 @@
 import Button from "@/components/common/Button";
 import { DESIGN_FILTERS, type DesignFilterKey } from "@/components/design/DesignFilterBar";
 import BottomSheet from "@/components/design/filter/BottomSheet";
-import CategoryOptions from "@/components/design/filter/CategoryOptions";
+import ChipOptions from "@/components/design/filter/ChipOptions";
 import ColorOptions from "@/components/design/filter/ColorOptions";
+import { FILTER_OPTIONS } from "@/components/design/filter/filterOptions";
 
 type DesignFilterSheetProps = {
   open: boolean;
@@ -34,7 +35,6 @@ export default function DesignFilterSheet({
 
   return (
     <BottomSheet open={open} onClose={onClose} label="디자인 필터">
-      {/* 탭 줄 묶음 ↔ 제목 묶음 사이 24px */}
       <div className="gap-xlarge flex min-h-0 flex-1 flex-col self-stretch">
         <div className="gap-medium flex flex-col self-stretch">
           <div role="tablist" className="px-medium gap-medium flex">
@@ -59,11 +59,12 @@ export default function DesignFilterSheet({
           <hr className="border-gray-300" />
         </div>
 
-        {/* 탭 제목 + 선택지 (16px). 넘치면 이 영역만 스크롤 (탭 줄 / 버튼은 고정) */}
+        {/* 탭 제목 + 선택지 . 넘치면 이 영역만 스크롤 (탭 줄 / 버튼은 고정) */}
         <div className="gap-large flex min-h-0 flex-1 flex-col self-stretch overflow-y-auto pb-4">
           <h2 className="typo-body1-semibold text-center text-gray-900">{tabLabel}</h2>
           {tab === "category" && (
-            <CategoryOptions
+            <ChipOptions
+              options={FILTER_OPTIONS.category}
               selected={selected.category}
               onToggle={(value) => onToggle("category", value)}
             />
@@ -74,7 +75,14 @@ export default function DesignFilterSheet({
               onToggle={(value) => onToggle("color", value)}
             />
           )}
-          {/* TODO: 쉐입 / 해시태그 선택지 */}
+          {tab === "hashtag" && (
+            <ChipOptions
+              options={FILTER_OPTIONS.hashtag}
+              selected={selected.hashtag}
+              onToggle={(value) => onToggle("hashtag", value)}
+            />
+          )}
+          {/* TODO: 쉐입 선택지 */}
         </div>
       </div>
 

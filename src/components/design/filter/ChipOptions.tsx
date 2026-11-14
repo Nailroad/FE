@@ -1,17 +1,17 @@
-import { FILTER_OPTIONS } from "@/components/design/filter/filterOptions";
-
-type CategoryOptionsProps = {
-  /** 선택된 카테고리들 */
+type ChipOptionsProps = {
+  /** 보여줄 선택지 목록 */
+  options: readonly string[];
+  /** 선택된 값들 */
   selected: readonly string[];
   /** 칩을 눌렀을 때 (선택 ↔ 해제) */
   onToggle: (value: string) => void;
 };
 
-/** 카테고리 선택 칩 (줄이 차면 다음 줄로) */
-export default function CategoryOptions({ selected, onToggle }: CategoryOptionsProps) {
+/** 네모 선택 칩 (줄이 차면 다음 줄로). 카테고리 / 해시태그 탭에서 사용 */
+export default function ChipOptions({ options, selected, onToggle }: ChipOptionsProps) {
   return (
     <div className="px-medium flex flex-wrap content-center items-center gap-2">
-      {FILTER_OPTIONS.category.map((option) => {
+      {options.map((option) => {
         const active = selected.includes(option);
         return (
           <button
