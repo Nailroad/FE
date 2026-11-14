@@ -17,6 +17,15 @@ const NAV_ITEMS = [
   { href: "/my", label: "마이", Icon: MyIcon },
 ] as const;
 
+/*
+ * 유리(Glass) 효과
+ */
+const GLASS_STYLE = [
+  "bg-white/70",
+  "backdrop-blur-[3px]",
+  "shadow-[0_4px_16px_0_rgb(0_0_0/0.05),inset_1px_1px_1px_rgb(255_255_255/0.65),inset_-1px_-1px_1px_rgb(255_255_255/0.25)]",
+].join(" ");
+
 function isActivePath(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -26,10 +35,7 @@ export default function NavBar() {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label="메인 메뉴"
-      className="bg-gray-0 w-full rounded-full p-1 shadow-[0_4px_20px_rgb(0_0_0/0.08)]"
-    >
+    <nav aria-label="메인 메뉴" className={`${GLASS_STYLE} w-full rounded-full p-1`}>
       <ul className="flex items-center">
         {NAV_ITEMS.map(({ href, label, Icon }) => {
           const active = isActivePath(pathname, href);
