@@ -6,8 +6,10 @@ import DesignTotalNumber from "@/components/design/DesignTotalNumber";
 export default function DesignPage() {
   return (
     <main className="flex flex-1 flex-col">
-      <DesignHeader />
-      <DesignFilterBar />
+      <div className="gap-medium2 flex flex-col">
+        <DesignHeader />
+        <DesignFilterBar />
+      </div>
       <DesignTotalNumber />
       <DesignMasonry />
     </main>
