@@ -255,3 +255,9 @@
   line-height: 1.4;
   letter-spacing: -0.2px;
 }
+@utility typo-caption2-medium {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+}
