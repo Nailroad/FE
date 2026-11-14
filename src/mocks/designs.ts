@@ -8,6 +8,10 @@ import card5 from "@/mocks/MockDesign/design card5.png";
 import card6 from "@/mocks/MockDesign/design card6.png";
 import card7 from "@/mocks/MockDesign/design card7.png";
 import card8 from "@/mocks/MockDesign/design card8.png";
+import card9 from "@/mocks/MockDesign/design card9.jpg";
+import card10 from "@/mocks/MockDesign/design card10.jpg";
+import card11 from "@/mocks/MockDesign/design card11.jpg";
+import card12 from "@/mocks/MockDesign/design card12.jpg";
 import type { Design } from "@/types/design";
 
 // import한 사진은 Next.js가 width / height를 자동으로 알려줌 → 비율 계산에 그대로 사용
@@ -28,4 +32,8 @@ export const MOCK_DESIGNS: Design[] = [
   toDesign(6, card6),
   toDesign(7, card7),
   toDesign(8, card8),
+  toDesign(9, card9),
+  toDesign(10, card10),
+  toDesign(11, card11),
+  toDesign(12, card12),
 ];
