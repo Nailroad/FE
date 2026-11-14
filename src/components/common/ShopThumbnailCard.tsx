@@ -2,8 +2,7 @@
 
 import type { MouseEventHandler, ReactNode } from "react";
 
-import ScrapDefaultIcon from "@/components/icons/ScrapDefaultIcon";
-import ScrapFilledIcon from "@/components/icons/ScrapFilledIcon";
+import BookmarkIcon from "@/components/icons/BookmarkIcon";
 
 type ShopThumbnailCardProps = {
   thumbnail: ReactNode;
@@ -22,8 +21,6 @@ export default function ShopThumbnailCard({
   onBookmarkClick,
   className = "",
 }: ShopThumbnailCardProps) {
-  const BookmarkIcon = bookmarked ? ScrapFilledIcon : ScrapDefaultIcon;
-
   return (
     <article className={`gap-medium flex w-[166px] flex-col ${className}`}>
       <div className="rounded-medium relative flex h-[104px] w-full overflow-hidden">
@@ -35,7 +32,7 @@ export default function ShopThumbnailCard({
           aria-pressed={bookmarked}
           onClick={onBookmarkClick}
         >
-          <BookmarkIcon size={24} />
+          <BookmarkIcon size={24} active={bookmarked} />
         </button>
       </div>
       <div className="pl-xsmall flex flex-col">
