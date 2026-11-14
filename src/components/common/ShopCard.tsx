@@ -3,8 +3,7 @@
 import Image from "next/image";
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
-import ScrapDefaultIcon from "@/components/icons/ScrapDefaultIcon";
-import ScrapFilledIcon from "@/components/icons/ScrapFilledIcon";
+import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import StarIcon from "@/components/icons/StarIcon";
 
 type ShopCardProps = HTMLAttributes<HTMLElement> & {
@@ -32,8 +31,6 @@ export default function ShopCard({
   className = "",
   ...props
 }: ShopCardProps) {
-  const BookmarkIcon = bookmarked ? ScrapFilledIcon : ScrapDefaultIcon;
-
   return (
     <article
       className={`gap-medium2 rounded-medium bg-gray-0 p-medium flex h-[114px] w-full max-w-[343px] items-start border border-gray-300 ${className}`}
@@ -69,7 +66,7 @@ export default function ShopCard({
         aria-pressed={bookmarked}
         onClick={onBookmarkClick}
       >
-        <BookmarkIcon size={24} />
+        <BookmarkIcon size={24} active={bookmarked} />
       </button>
     </article>
   );

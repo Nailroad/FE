@@ -2,8 +2,7 @@
 
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
-import ScrapDefaultIcon from "@/components/icons/ScrapDefaultIcon";
-import ScrapFilledIcon from "@/components/icons/ScrapFilledIcon";
+import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import StarIcon from "@/components/icons/StarIcon";
 
 type ShopGalleryCardProps = HTMLAttributes<HTMLElement> & {
@@ -27,8 +26,6 @@ export default function ShopGalleryCard({
   className = "",
   ...props
 }: ShopGalleryCardProps) {
-  const BookmarkIcon = bookmarked ? ScrapFilledIcon : ScrapDefaultIcon;
-
   return (
     <article
       className={`py-medium w-full max-w-[375px] border-b border-gray-300 ${className}`}
@@ -45,7 +42,7 @@ export default function ShopGalleryCard({
               aria-pressed={bookmarked}
               onClick={onBookmarkClick}
             >
-              <BookmarkIcon size={24} />
+              <BookmarkIcon size={24} active={bookmarked} />
             </button>
           </div>
           <div className="gap-medium flex items-center text-gray-900">

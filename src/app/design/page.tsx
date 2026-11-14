@@ -11,8 +11,8 @@ export default function DesignPage() {
         <DesignHeader />
         <DesignFilterBar />
         <DesignTotalNumber total={MOCK_DESIGNS.length} />
+        <DesignMasonry designs={MOCK_DESIGNS} />
       </div>
-      <DesignMasonry />
     </main>
   );
 }
