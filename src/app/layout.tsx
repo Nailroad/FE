@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
-import NavBar from "@/components/navbar/NavBar";
+import NavBar from "@/components/common/NavBar";
 
 const suit = localFont({
   src: "../assets/fonts/SUIT-Variable.woff2",

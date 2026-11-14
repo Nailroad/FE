@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-
 import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
 import ScrapDefaultIcon from "@/components/icons/ScrapDefaultIcon";
@@ -37,7 +36,7 @@ export default function ShopCard({
 
   return (
     <article
-      className={`flex h-[114px] w-full max-w-[343px] items-start gap-medium2 rounded-medium border border-gray-300 bg-gray-0 p-medium ${className}`}
+      className={`gap-medium2 rounded-medium bg-gray-0 p-medium flex h-[114px] w-full max-w-[343px] items-start border border-gray-300 ${className}`}
       {...props}
     >
       <Image
@@ -45,19 +44,21 @@ export default function ShopCard({
         alt={imageAlt}
         width={80}
         height={80}
-        className="size-20 shrink-0 rounded-medium object-cover"
+        className="rounded-medium size-20 shrink-0 object-cover"
       />
-      <div className="flex min-w-0 flex-1 flex-col gap-medium">
+      <div className="gap-medium flex min-w-0 flex-1 flex-col">
         <div className="flex flex-col">
           <h3 className="typo-heading2-semibold truncate text-gray-900">{name}</h3>
           <p className="typo-body1-medium truncate text-gray-600">{address}</p>
         </div>
-        <div className="flex items-center gap-medium text-gray-900">
+        <div className="gap-medium flex items-center text-gray-900">
           {openLabel ? <span className="typo-body2-medium">{openLabel}</span> : null}
-          <span className="flex items-center gap-xsmall">
+          <span className="gap-xsmall flex items-center">
             <StarIcon size={16} className="text-primary-500" />
             <span className="typo-body2-medium">{rating}</span>
-            {reviewCount ? <span className="typo-body2-medium text-gray-600">({reviewCount})</span> : null}
+            {reviewCount ? (
+              <span className="typo-body2-medium text-gray-600">({reviewCount})</span>
+            ) : null}
           </span>
         </div>
       </div>

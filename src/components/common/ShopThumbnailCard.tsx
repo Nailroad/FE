@@ -25,8 +25,8 @@ export default function ShopThumbnailCard({
   const BookmarkIcon = bookmarked ? ScrapFilledIcon : ScrapDefaultIcon;
 
   return (
-    <article className={`flex w-[166px] flex-col gap-medium ${className}`}>
-      <div className="relative flex h-[104px] w-full overflow-hidden rounded-medium">
+    <article className={`gap-medium flex w-[166px] flex-col ${className}`}>
+      <div className="rounded-medium relative flex h-[104px] w-full overflow-hidden">
         {thumbnail}
         <button
           type="button"
@@ -38,7 +38,7 @@ export default function ShopThumbnailCard({
           <BookmarkIcon size={24} />
         </button>
       </div>
-      <div className="flex flex-col pl-xsmall">
+      <div className="pl-xsmall flex flex-col">
         <h3 className="typo-body2-semibold truncate text-gray-900">{name}</h3>
         <p className="typo-caption1-medium truncate text-gray-600">{region}</p>
       </div>

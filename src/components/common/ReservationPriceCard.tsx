@@ -25,15 +25,15 @@ export default function ReservationPriceCard({
 }: ReservationPriceCardProps) {
   return (
     <article
-      className={`flex w-full max-w-[343px] items-end gap-large rounded-medium border border-gray-300 bg-gray-0 p-medium ${className}`}
+      className={`gap-large rounded-medium bg-gray-0 p-medium flex w-full max-w-[343px] items-end border border-gray-300 ${className}`}
       {...props}
     >
-      <span className="flex size-24 shrink-0 overflow-hidden rounded-medium">{thumbnail}</span>
-      <div className="flex min-w-0 flex-1 flex-col gap-medium">
-        <div className="flex flex-col gap-small">
+      <span className="rounded-medium flex size-24 shrink-0 overflow-hidden">{thumbnail}</span>
+      <div className="gap-medium flex min-w-0 flex-1 flex-col">
+        <div className="gap-small flex flex-col">
           <h3 className="typo-body1-semibold text-gray-900">{name}</h3>
-          <div className="flex flex-col gap-xsmall text-gray-600">
-            <span className="flex items-center gap-small">
+          <div className="gap-xsmall flex flex-col text-gray-600">
+            <span className="gap-small flex items-center">
               {locationIcon ? <span className="flex size-4 shrink-0">{locationIcon}</span> : null}
               <span className="typo-body2-medium truncate">{location}</span>
               {radius ? (
@@ -43,7 +43,7 @@ export default function ReservationPriceCard({
                 </>
               ) : null}
             </span>
-            <span className="flex items-center gap-small">
+            <span className="gap-small flex items-center">
               {dateIcon ? <span className="flex size-4 shrink-0">{dateIcon}</span> : null}
               <span className="typo-body2-medium truncate">{dates}</span>
             </span>

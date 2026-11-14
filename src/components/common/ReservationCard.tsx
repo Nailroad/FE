@@ -25,16 +25,16 @@ export default function ReservationCard({
 }: ReservationCardProps) {
   return (
     <article
-      className={`flex w-full max-w-[343px] items-center gap-large py-medium ${
+      className={`gap-large py-medium flex w-full max-w-[343px] items-center ${
         showDivider ? "border-b border-gray-300" : ""
       } ${className}`}
       {...props}
     >
-      <span className="flex size-24 shrink-0 overflow-hidden rounded-medium">{thumbnail}</span>
-      <div className="flex min-w-0 flex-col gap-medium">
+      <span className="rounded-medium flex size-24 shrink-0 overflow-hidden">{thumbnail}</span>
+      <div className="gap-medium flex min-w-0 flex-col">
         <h3 className="typo-body1-semibold text-gray-900">{status}</h3>
-        <div className="flex flex-col gap-xsmall text-gray-600">
-          <span className="flex items-center gap-small">
+        <div className="gap-xsmall flex flex-col text-gray-600">
+          <span className="gap-small flex items-center">
             {locationIcon ? <span className="flex size-4 shrink-0">{locationIcon}</span> : null}
             <span className="typo-body2-medium truncate">{location}</span>
             {radius ? (
@@ -44,7 +44,7 @@ export default function ReservationCard({
               </>
             ) : null}
           </span>
-          <span className="flex items-center gap-small">
+          <span className="gap-small flex items-center">
             {dateIcon ? <span className="flex size-4 shrink-0">{dateIcon}</span> : null}
             <span className="typo-body2-medium truncate">{dates}</span>
           </span>

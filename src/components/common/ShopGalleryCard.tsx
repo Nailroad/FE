@@ -30,10 +30,13 @@ export default function ShopGalleryCard({
   const BookmarkIcon = bookmarked ? ScrapFilledIcon : ScrapDefaultIcon;
 
   return (
-    <article className={`w-full max-w-[375px] border-b border-gray-300 py-medium ${className}`} {...props}>
-      <div className="flex flex-col gap-medium2">
-        <div className="flex flex-col gap-medium">
-          <div className="flex items-center gap-large">
+    <article
+      className={`py-medium w-full max-w-[375px] border-b border-gray-300 ${className}`}
+      {...props}
+    >
+      <div className="gap-medium2 flex flex-col">
+        <div className="gap-medium flex flex-col">
+          <div className="gap-large flex items-center">
             <h3 className="typo-heading1-semibold min-w-0 flex-1 truncate text-gray-900">{name}</h3>
             <button
               type="button"
@@ -45,18 +48,23 @@ export default function ShopGalleryCard({
               <BookmarkIcon size={24} />
             </button>
           </div>
-          <div className="flex items-center gap-medium text-gray-900">
+          <div className="gap-medium flex items-center text-gray-900">
             {openLabel ? <span className="typo-body2-medium">{openLabel}</span> : null}
-            <span className="flex items-center gap-xsmall">
+            <span className="gap-xsmall flex items-center">
               <StarIcon size={16} className="text-primary-500" />
               <span className="typo-body2-medium">{rating}</span>
-              {reviewCount ? <span className="typo-body2-medium text-gray-600">({reviewCount})</span> : null}
+              {reviewCount ? (
+                <span className="typo-body2-medium text-gray-600">({reviewCount})</span>
+              ) : null}
             </span>
           </div>
         </div>
-        <div className="flex gap-small overflow-x-auto" aria-label="샵 이미지">
+        <div className="gap-small flex overflow-x-auto" aria-label="샵 이미지">
           {images.map((image, index) => (
-            <span key={index} className="flex h-[120px] w-[156px] shrink-0 overflow-hidden rounded-medium">
+            <span
+              key={index}
+              className="rounded-medium flex h-[120px] w-[156px] shrink-0 overflow-hidden"
+            >
               {image}
             </span>
           ))}

@@ -21,10 +21,10 @@ export default function Chip({
   return (
     <button
       type={type}
-      className={`flex items-center justify-center gap-0.5 rounded-full px-small2 py-small transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`px-small2 py-small flex items-center justify-center gap-0.5 rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
         selected
-          ? "bg-gray-900 text-gray-0"
-          : "border border-gray-300 bg-gray-0 text-gray-900 hover:border-gray-400"
+          ? "text-gray-0 bg-gray-900"
+          : "bg-gray-0 border border-gray-300 text-gray-900 hover:border-gray-400"
       } ${className}`}
       aria-pressed={selected}
       {...props}
