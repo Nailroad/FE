@@ -1,22 +1,27 @@
-import Image from "next/image";
+"use client";
+
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 import Header from "@/components/common/Header";
-import BellIcon from "@/components/icons/BellIcon";
+import bell from "@/mocks/home/bell.svg";
+import logo from "@/mocks/home/logo.svg";
 
 export type HomeBanner = {
   id: string;
   eyebrow?: string;
   title: string;
   description?: string;
-  imageSrc: string;
+  imageSrc: StaticImageData;
+  imageCrop?: "cover" | "zoomed";
   href: string;
 };
 
 export type HomeNailItem = {
   id: string;
   title: string;
-  imageSrc: string;
+  imageSrc: StaticImageData;
   href: string;
 };
 
@@ -24,7 +29,7 @@ export type HomeMagazineItem = {
   id: string;
   category: string;
   title: string;
-  imageSrc: string;
+  imageSrc: StaticImageData;
   href: string;
 };
 
@@ -52,12 +57,21 @@ export default function HomeScreen({
   magazineItems,
   notificationHref = "/notifications",
 }: HomeScreenProps) {
+  const visibleBanners = banners.length > 1 ? [banners[0], banners[1], banners[0]] : banners;
+  const bannerCarouselRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (bannerCarouselRef.current) {
+      bannerCarouselRef.current.scrollLeft = 351;
+    }
+  }, []);
+
   return (
     <main className="mx-auto flex w-full max-w-[375px] flex-col bg-gray-0">
       <Header
         left={
           <Link href="/home" className="flex h-[38px] w-[104px] items-center">
-            <Image src="/images/home/logo.svg" alt="Nailroad" width={104} height={38} priority unoptimized />
+            <Image src={logo} alt="Nailroad" width={104} height={38} priority unoptimized />
           </Link>
         }
         right={
@@ -66,29 +80,38 @@ export default function HomeScreen({
             aria-label="알림"
             className="flex size-6 items-center justify-center text-gray-900"
           >
-            <BellIcon size={24} />
+            <Image src={bell} alt="" width={24} height={24} priority unoptimized />
           </Link>
         }
       />
 
-      <section className="mt-[12px] px-4" aria-label="프로모션">
-        <div className="flex snap-x snap-mandatory gap-medium overflow-x-auto [scrollbar-width:none]">
-          {banners.map((banner, index) => (
+      <section className="mt-[12px]" aria-label="프로모션">
+        <div
+          ref={bannerCarouselRef}
+          className="h-[280px] w-full snap-x snap-mandatory overflow-x-auto [scrollbar-width:none]"
+        >
+          <div className="flex w-max gap-2 px-4">
+            {visibleBanners.map((banner, index) => (
             <Link
-              key={banner.id}
+              key={`${banner.id}-${index}`}
               href={banner.href}
-              className="relative h-[280px] min-w-full snap-start overflow-hidden rounded-large bg-primary-50"
+              className="relative h-[280px] w-[343px] shrink-0 snap-center overflow-hidden rounded-medium2 bg-primary-50"
             >
-              <Image
-                src={banner.imageSrc}
-                alt={banner.title}
-                width={343}
-                height={610}
-                priority={index === 0}
-                className="absolute left-0 top-[-15.71%] h-[217.7%] w-full max-w-none"
-              />
+              {banner.imageCrop === "zoomed" ? (
+                <Image
+                  src={banner.imageSrc}
+                  alt={banner.title}
+                  width={343}
+                  height={610}
+                  priority={index === 1}
+                  className="absolute left-0 top-[-15.71%] h-[217.7%] w-full max-w-none"
+                />
+              ) : (
+                <Image src={banner.imageSrc} alt={banner.title} fill priority={index === 1} className="object-cover" />
+              )}
             </Link>
           ))}
+          </div>
         </div>
       </section>
 
