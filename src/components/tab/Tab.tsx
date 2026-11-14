@@ -6,11 +6,25 @@ export type TabItem<T extends string> = {
 };
 
 type TabProps<T extends string> = {
+  /** 탭 목록. 순서대로 왼쪽부터 표시되고, 부모 폭을 개수만큼 똑같이 나눔 */
   items: readonly TabItem<T>[];
   value: T;
   onChange: (value: T) => void;
   className?: string;
 };
+
+/**
+ * @example
+ * const TABS = [
+ *   { value: "design", label: "디자인" },
+ *   { value: "shop", label: "샵" },
+ * ] as const;
+ *
+ * const [tab, setTab] = useState<"design" | "shop">("design");
+ *
+ * <Tab items={TABS} value={tab} onChange={setTab} />
+ * {tab === "design" ? <DesignList /> : <ShopList />}
+ */
 
 export default function Tab<T extends string>({
   items,
