@@ -10,7 +10,7 @@ import MyIcon from "@/components/icons/MyIcon";
 import ShopIcon from "@/components/icons/ShopIcon";
 
 const NAV_ITEMS = [
-  { href: "/", label: "홈", Icon: HomeIcon },
+  { href: "/home", label: "홈", Icon: HomeIcon },
   { href: "/design", label: "디자인", Icon: DesignIcon },
   { href: "/shop", label: "샵", Icon: ShopIcon },
   { href: "/matching", label: "매칭", Icon: MatchingIcon },
@@ -27,7 +27,6 @@ const GLASS_STYLE = [
 ].join(" ");
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
