@@ -6,6 +6,7 @@ import BottomSheet from "@/components/design/filter/BottomSheet";
 import ChipOptions from "@/components/design/filter/ChipOptions";
 import ColorOptions from "@/components/design/filter/ColorOptions";
 import { FILTER_OPTIONS } from "@/components/design/filter/filterOptions";
+import ShapeOptions from "@/components/design/filter/ShapeOptions";
 
 type DesignFilterSheetProps = {
   open: boolean;
@@ -82,7 +83,12 @@ export default function DesignFilterSheet({
               onToggle={(value) => onToggle("hashtag", value)}
             />
           )}
-          {/* TODO: 쉐입 선택지 */}
+          {tab === "shape" && (
+            <ShapeOptions
+              selected={selected.shape}
+              onToggle={(value) => onToggle("shape", value)}
+            />
+          )}
         </div>
       </div>
 
