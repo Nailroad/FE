@@ -33,6 +33,10 @@ function isActivePath(pathname: string, href: string) {
 export default function NavBar() {
   const pathname = usePathname();
 
+  if (/^\/design\/[^/]+$/.test(pathname)) {
+    return null;
+  }
+
   return (
     <nav aria-label="메인 메뉴" className={`${GLASS_STYLE} w-full rounded-full p-1`}>
       <ul className="flex items-center">
