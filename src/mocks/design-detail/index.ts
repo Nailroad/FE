@@ -1,3 +1,4 @@
+import design1Image from "@/mocks/design-detail/design-1.png";
 import shopProfileImage from "@/mocks/design-detail/shop-profile.png";
 
 export type DesignColor = {
@@ -6,6 +7,7 @@ export type DesignColor = {
 };
 
 export type DesignDetail = {
+  detailImage?: typeof design1Image;
   categories: string[];
   shapes: string[];
   colors: DesignColor[];
@@ -36,5 +38,11 @@ const DEFAULT_DESIGN_DETAIL: DesignDetail = {
 };
 
 export const MOCK_DESIGN_DETAILS: Record<number, DesignDetail> = Object.fromEntries(
-  Array.from({ length: 12 }, (_, index) => [index + 1, DEFAULT_DESIGN_DETAIL]),
+  Array.from({ length: 12 }, (_, index) => [
+    index + 1,
+    {
+      ...DEFAULT_DESIGN_DETAIL,
+      ...(index === 0 ? { detailImage: design1Image } : {}),
+    },
+  ]),
 );

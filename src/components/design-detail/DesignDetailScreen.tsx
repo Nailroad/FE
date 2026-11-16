@@ -30,7 +30,14 @@ export default function DesignDetailScreen({ design, detail }: DesignDetailScree
       <div className="gap-xlarge flex flex-col">
         <section className="px-medium gap-medium2 flex flex-col">
           <div className="relative h-[246px] overflow-hidden rounded-medium2 bg-gray-200">
-            <Image src={design.imageUrl} alt="선택한 네일 디자인" fill sizes="343px" className="object-cover" priority />
+            <Image
+              src={detail.detailImage ?? design.imageUrl}
+              alt="선택한 네일 디자인"
+              fill
+              sizes="343px"
+              className="object-cover"
+              priority
+            />
           </div>
 
           <article className="rounded-medium2 bg-gray-100 p-medium flex items-center justify-between">
