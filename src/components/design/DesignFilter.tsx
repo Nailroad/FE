@@ -2,23 +2,39 @@
 
 import { useCallback, useState } from "react";
 
-import DesignFilterBar, { type DesignFilterKey } from "@/components/design/DesignFilterBar";
+import DesignFilterBar, {
+  DESIGN_FILTERS,
+  type DesignFilterKey,
+} from "@/components/design/DesignFilterBar";
 import DesignFilterSheet from "@/components/design/filter/DesignFilterSheet";
 
-/** 필터 칩 줄 + 필터 바텀시트. 칩을 누르면 해당 탭으로 시트가 열림 */
+type FilterValues = Record<DesignFilterKey, string[]>;
+
+const EMPTY_FILTERS: FilterValues = { category: [], color: [], shape: [], hashtag: [] };
+
+/**
+ * 필터 칩 줄 + 필터 바텀시트
+ * - applied: 적용된 필터 (적용하기를 눌렀을 때만 바뀜). 값이 있는 칩만 검정
+ * - draft: 시트 안에서 고르는 중인 임시 값. 적용하기 없이 닫으면 버려짐
+ */
 export default function DesignFilter() {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<DesignFilterKey>("category");
-  // 탭별 선택값 (TODO: 적용하기 / 초기화 연결)
-  const [selected, setSelected] = useState<Record<DesignFilterKey, string[]>>({
-    category: [],
-    color: [],
-    shape: [],
-    hashtag: [],
-  });
+  const [applied, setApplied] = useState<FilterValues>(EMPTY_FILTERS);
+  const [draft, setDraft] = useState<FilterValues>(EMPTY_FILTERS);
+
+  // 적용된 값이 하나라도 있는 필터만 검정
+  const activeKeys = DESIGN_FILTERS.map(({ key }) => key).filter((key) => applied[key].length > 0);
+
+  // 칩 클릭: 지금 적용된 값으로 임시 선택을 시작하고, 누른 칩의 탭으로 시트 열기
+  const handleFilterClick = (key: DesignFilterKey) => {
+    setDraft(applied);
+    setTab(key);
+    setOpen(true);
+  };
 
   const handleToggle = (key: DesignFilterKey, value: string) => {
-    setSelected((prev) => ({
+    setDraft((prev) => ({
       ...prev,
       [key]: prev[key].includes(value)
         ? prev[key].filter((v) => v !== value)
@@ -26,24 +42,26 @@ export default function DesignFilter() {
     }));
   };
 
-  const handleFilterClick = (key: DesignFilterKey) => {
-    setTab(key);
-    setOpen(true);
+  // 적용하기: 임시 선택을 확정하고 닫기
+  const handleApply = () => {
+    setApplied(draft);
+    setOpen(false);
   };
 
+  // 그냥 닫기: 임시 선택은 다음에 열 때 applied로 덮어써지므로 버려짐
   const handleClose = useCallback(() => setOpen(false), []);
 
   return (
     <>
-      <DesignFilterBar onFilterClick={handleFilterClick} />
+      <DesignFilterBar activeKeys={activeKeys} onFilterClick={handleFilterClick} />
       <DesignFilterSheet
         open={open}
         tab={tab}
         onTabChange={setTab}
-        selected={selected}
+        selected={draft}
         onToggle={handleToggle}
         onClose={handleClose}
-        onApply={handleClose}
+        onApply={handleApply}
       />
     </>
   );
