@@ -116,7 +116,7 @@ export default function HomeScreen({
       </section>
 
       <section className="mt-[40px]">
-        <SectionHeader title="맞춤형 네일" href="/design" />
+        <SectionHeader title="맞춤형 네일" href="/custom-nail" />
         <div className="mt-[12px] flex gap-medium overflow-x-auto px-4 [scrollbar-width:none]">
           {nailItems.map((item) => (
             <Link key={item.id} href={item.href} aria-label={item.title} className="w-[120px] shrink-0">

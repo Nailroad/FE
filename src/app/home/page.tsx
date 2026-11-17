@@ -25,7 +25,7 @@ const banners: HomeBanner[] = [
     title: "핑크 홀리데이",
     imageSrc: banner1,
     imageCrop: "cover",
-    href: "/design",
+    href: "/banner/pink-holiday-preview",
   },
   {
     id: "pink-holiday",
@@ -34,7 +34,7 @@ const banners: HomeBanner[] = [
     description: "나만의 핑크를 찾아보세요.",
     imageSrc: banner,
     imageCrop: "zoomed",
-    href: "/design",
+    href: "/banner/pink-holiday",
   },
 ];
 
