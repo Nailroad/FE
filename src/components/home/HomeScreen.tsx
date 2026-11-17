@@ -104,7 +104,7 @@ export default function HomeScreen({
                   width={343}
                   height={610}
                   priority={index === 1}
-                  className="absolute left-0 top-[-15.71%] h-[217.7%] w-full max-w-none"
+                  className="absolute left-0 top-[-48.8%] h-[217.7%] w-full max-w-none"
                 />
               ) : (
                 <Image src={banner.imageSrc} alt={banner.title} fill priority={index === 1} className="object-cover" />
