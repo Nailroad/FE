@@ -33,7 +33,7 @@ export default function ShopCard({
 }: ShopCardProps) {
   return (
     <article
-      className={`gap-medium2 rounded-medium bg-gray-0 p-medium flex h-[114px] w-full max-w-[343px] items-start border border-gray-300 ${className}`}
+      className={`gap-medium2 rounded-medium bg-gray-0 p-medium flex h-[114px] w-full items-start border border-gray-300 ${className}`}
       {...props}
     >
       <Image

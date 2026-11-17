@@ -27,10 +27,7 @@ export default function ShopGalleryCard({
   ...props
 }: ShopGalleryCardProps) {
   return (
-    <article
-      className={`py-medium w-full max-w-[375px] border-b border-gray-300 ${className}`}
-      {...props}
-    >
+    <article className={`py-medium w-full border-b border-gray-300 ${className}`} {...props}>
       <div className="gap-medium2 flex flex-col">
         <div className="gap-medium flex flex-col">
           <div className="gap-large flex items-center">

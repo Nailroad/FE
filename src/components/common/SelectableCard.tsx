@@ -23,7 +23,7 @@ export default function SelectableCard({
   return (
     <button
       type={type}
-      className={`gap-large rounded-medium2 p-medium flex w-full max-w-[343px] items-center border text-left transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+      className={`gap-large rounded-medium2 p-medium flex w-full items-center border text-left transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
         selected
           ? "border-primary-500 bg-primary-50"
           : "bg-gray-0 hover:border-primary-300 border-gray-300"
