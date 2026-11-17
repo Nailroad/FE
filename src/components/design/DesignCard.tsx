@@ -11,6 +11,8 @@ type DesignCardProps = {
   design: Design;
   /** 북마크를 눌렀을 때 (바뀐 북마크 상태가 넘어옴) */
   onBookmarkChange?: (id: number, bookmarked: boolean) => void;
+  /** 사진이 불러와졌을 때 원본 크기 전달 (API에 사진 크기가 없어서 직접 잼) */
+  onImageLoad?: (id: number, width: number, height: number) => void;
 };
 
 /**
@@ -19,7 +21,7 @@ type DesignCardProps = {
  * - 세로: 사진 원본 비율(width / height)로 자동 결정 → 사진이 뜨기 전에도 자리 확보
  * - 사진을 누르면 디자인 상세로 이동, 북마크는 저장만 토글
  */
-export default function DesignCard({ design, onBookmarkChange }: DesignCardProps) {
+export default function DesignCard({ design, onBookmarkChange, onImageLoad }: DesignCardProps) {
   const [bookmarked, setBookmarked] = useState(design.bookmarked);
 
   const handleBookmarkClick = () => {
@@ -40,6 +42,9 @@ export default function DesignCard({ design, onBookmarkChange }: DesignCardProps
           fill
           sizes="(max-width: 480px) 50vw, 240px"
           className="object-cover"
+          onLoad={(e) =>
+            onImageLoad?.(design.id, e.currentTarget.naturalWidth, e.currentTarget.naturalHeight)
+          }
         />
       </Link>
 

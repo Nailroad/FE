@@ -67,7 +67,7 @@ export default function HomeScreen({
   }, []);
 
   return (
-    <main className="mx-auto flex w-full max-w-[375px] flex-col bg-gray-0">
+    <main className="mx-auto flex w-full flex-col bg-gray-0">
       <Header
         left={
           <Link href="/home" className="flex h-[38px] w-[104px] items-center">

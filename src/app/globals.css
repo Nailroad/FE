@@ -11,7 +11,7 @@
   --color-foreground: var(--foreground);
 }
 
+/* body 배경(앱 바깥 영역)은 layout.tsx의 bg-* 클래스로 지정. 여기서 지정하면 클래스를 덮어씀 */
 body {
-  background: var(--background);
   color: var(--foreground);
 }

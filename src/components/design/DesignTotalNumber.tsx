@@ -3,7 +3,8 @@
 import NavArrowDownIcon from "@/components/icons/NavArrowDownIcon";
 
 type DesignTotalNumberProps = {
-  total: number;
+  /** 전체 개수. 없으면 숨김 (API에 totalCount가 생기면 연결) */
+  total?: number;
   sortLabel?: string;
   /** 정렬 버튼을 눌렀을 때 (추후 정렬 선택 열기) */
   onSortClick?: () => void;
@@ -16,7 +17,9 @@ export default function DesignTotalNumber({
 }: DesignTotalNumberProps) {
   return (
     <div className="px-medium flex items-center justify-between">
-      <p className="typo-body2-medium text-gray-900">{total.toLocaleString("ko-KR")}개</p>
+      <p className="typo-body2-medium text-gray-900">
+        {total !== undefined && `${total.toLocaleString("ko-KR")}개`}
+      </p>
       <button
         type="button"
         onClick={onSortClick}

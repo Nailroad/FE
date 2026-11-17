@@ -3,6 +3,8 @@ import type { Design } from "@/types/design";
 
 type DesignMasonryProps = {
   designs: Design[];
+  /** 사진이 불러와졌을 때 원본 크기 전달 */
+  onImageLoad?: (id: number, width: number, height: number) => void;
 };
 
 /**
@@ -63,7 +65,7 @@ function splitIntoColumns(designs: Design[]) {
   return columns;
 }
 
-export default function DesignMasonry({ designs }: DesignMasonryProps) {
+export default function DesignMasonry({ designs, onImageLoad }: DesignMasonryProps) {
   const columns = splitIntoColumns(arrangeByBatch(designs));
 
   return (
@@ -72,7 +74,7 @@ export default function DesignMasonry({ designs }: DesignMasonryProps) {
         <ul key={i} className="gap-medium2 flex flex-1 flex-col">
           {column.map((design) => (
             <li key={design.id}>
-              <DesignCard design={design} />
+              <DesignCard design={design} onImageLoad={onImageLoad} />
             </li>
           ))}
         </ul>

@@ -25,7 +25,7 @@ export default function ReservationCard({
 }: ReservationCardProps) {
   return (
     <article
-      className={`gap-large py-medium flex w-full max-w-[343px] items-center ${
+      className={`gap-large py-medium flex w-full items-center ${
         showDivider ? "border-b border-gray-300" : ""
       } ${className}`}
       {...props}
