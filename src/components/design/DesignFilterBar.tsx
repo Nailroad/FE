@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import Chip from "@/components/common/Chip";
 import NavArrowDownIcon from "@/components/icons/NavArrowDownIcon";
 
@@ -15,30 +13,22 @@ export const DESIGN_FILTERS = [
 export type DesignFilterKey = (typeof DESIGN_FILTERS)[number]["key"];
 
 type DesignFilterBarProps = {
-  /** 칩을 눌렀을 때 (추후 필터 바텀시트 열기) */
+  /** 검정으로 보일 필터 (적용된 값이 있는 필터) */
+  activeKeys?: readonly DesignFilterKey[];
+  /** 칩을 눌렀을 때 (필터 바텀시트 열기) */
   onFilterClick?: (key: DesignFilterKey) => void;
 };
 
-export default function DesignFilterBar({ onFilterClick }: DesignFilterBarProps) {
-  // 선택하는 필터들 (현재는 다시 누르면 해제되는 토글 방식-> 추후 기능 협의 필요)
-  const [selectedKeys, setSelectedKeys] = useState<DesignFilterKey[]>([]);
-
-  const handleClick = (key: DesignFilterKey) => {
-    setSelectedKeys((prev) =>
-      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
-    );
-    onFilterClick?.(key);
-  };
-
+export default function DesignFilterBar({ activeKeys = [], onFilterClick }: DesignFilterBarProps) {
   return (
     // 가로 스크롤 (스크롤바는 숨김)
     <div className="pl-medium gap-medium flex h-[38px] [scrollbar-width:none] items-center overflow-x-auto [&::-webkit-scrollbar]:hidden">
       {DESIGN_FILTERS.map(({ key, label }) => (
         <Chip
           key={key}
-          selected={selectedKeys.includes(key)}
+          selected={activeKeys.includes(key)}
           rightIcon={<NavArrowDownIcon size={20} />}
-          onClick={() => handleClick(key)}
+          onClick={() => onFilterClick?.(key)}
           className="shrink-0 cursor-pointer"
         >
           {label}
