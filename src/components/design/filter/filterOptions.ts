@@ -15,7 +15,7 @@ import StilettoIcon from "@/components/icons/shape/StilettoIcon";
 
 /** 필터 바텀시트 탭별 선택지 */
 export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
-  category: ["웜톤", "자석", "프렌치", "시럽", "그라데이션", "글리터", "파츠", "도트", "캐릭터"],
+  category: ["원톤", "자석", "프렌치", "시럽", "그라데이션", "글리터", "파츠", "도트", "캐릭터"],
   color: [
     "레드",
     "오렌지",
@@ -32,6 +32,8 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "실버",
     "골드",
     "투명",
+    "누드",
+    "카키",
   ],
   shape: [
     "라운드",
@@ -73,6 +75,14 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "#봄웜네일",
     "#가을웜네일",
     "#비비드네일",
+    "#3D네일",
+    "#갸루네일",
+    "#쇠맛네일",
+    "#레오파드",
+    "#오리엔탈네일",
+    "#치크네일",
+    "#뉘앙스네일",
+    "#마블네일",
   ],
 };
 
@@ -94,6 +104,8 @@ export const COLOR_SWATCHES: Record<string, string> = {
   골드: "#d7b86d",
   // 피그마: 채우기 0% + 유리 효과 (빛 -45° / 90%) → 왼쪽 위 살짝 그늘, 오른쪽 아래 밝게 근사
   투명: "linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, rgba(255, 255, 255, 0) 55%)",
+  누드: "#ddb6ac",
+  카키: "#92966a",
 };
 
 /** 밝은 색: 회색 테두리 + 회색 체크 (피그마 "흰색 / 투명 / 베이지 기준") */
