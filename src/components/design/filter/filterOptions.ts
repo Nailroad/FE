@@ -129,3 +129,53 @@ export const SHAPE_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>>
   엣지: EdgeIcon,
   플레어: FlareIcon,
 };
+
+/**
+ * 화면 이름 → API 코드 (Swagger 기준)
+ * TODO: 해시태그는 백엔드에서 코드 목록 받으면 추가
+ */
+export const FILTER_CODES: Record<"category" | "color" | "shape", Record<string, string>> = {
+  category: {
+    원톤: "ONE_TONE",
+    자석: "MAGNET",
+    프렌치: "FRENCH",
+    시럽: "SYRUP",
+    그라데이션: "GRADATION",
+    글리터: "GLITTER",
+    파츠: "PARTS",
+    도트: "DOT",
+    캐릭터: "CHARACTER",
+  },
+  color: {
+    레드: "RED",
+    오렌지: "ORANGE",
+    옐로우: "YELLOW",
+    그린: "GREEN",
+    블루: "BLUE",
+    퍼플: "PURPLE",
+    핑크: "PINK",
+    화이트: "WHITE",
+    블랙: "BLACK",
+    브라운: "BROWN",
+    베이지: "BEIGE",
+    그레이: "GRAY",
+    실버: "SILVER",
+    골드: "GOLD",
+    투명: "TRANSPARENT",
+    누드: "NUDE",
+    카키: "KHAKI",
+  },
+  shape: {
+    라운드: "ROUND",
+    오벌: "OVAL",
+    스퀘어: "SQUARE",
+    "스퀘어 오벌": "SQUOVAL",
+    발레리나: "BALLERINA",
+    스틸레토: "STILETTO",
+    아몬드: "ALMOND",
+    "애로우 헤드": "ARROWHEAD",
+    "마운틴 피크": "MOUNTAIN_PEAK",
+    엣지: "EDGE",
+    플레어: "FLARE",
+  },
+};

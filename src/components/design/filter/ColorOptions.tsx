@@ -14,7 +14,7 @@ type ColorOptionsProps = {
 
 /**
  * 색상 동그라미 + 이름. 선택하면 체크 표시
- * - 5열 그리드: 표 전체는 가운데, 칸은 왼쪽부터 채움 → 마지막 줄도 위 줄과 열이 맞음
+ * - 5열 그리드: 표 전체는 가운데, 칸은 왼쪽부터 채움
  */
 export default function ColorOptions({ selected, onToggle }: ColorOptionsProps) {
   return (

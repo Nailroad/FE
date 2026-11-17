@@ -8,19 +8,25 @@ import DesignFilterBar, {
 } from "@/components/design/DesignFilterBar";
 import DesignFilterSheet from "@/components/design/filter/DesignFilterSheet";
 
-type FilterValues = Record<DesignFilterKey, string[]>;
+export type FilterValues = Record<DesignFilterKey, string[]>;
 
-const EMPTY_FILTERS: FilterValues = { category: [], color: [], shape: [], hashtag: [] };
+export const EMPTY_FILTERS: FilterValues = { category: [], color: [], shape: [], hashtag: [] };
 
 /**
  * 필터 칩 줄 + 필터 바텀시트
- * - applied: 적용된 필터 (적용하기를 눌렀을 때만 바뀜). 값이 있는 칩만 검정
+ * - applied: 적용된 필터 (부모가 관리, 적용하기를 눌렀을 때만 바뀜). 값이 있는 칩만 검정
  * - draft: 시트 안에서 고르는 중인 임시 값. 적용하기 없이 닫으면 버려짐
  */
-export default function DesignFilter() {
+type DesignFilterProps = {
+  /** 적용된 필터 */
+  applied: FilterValues;
+  /** 적용하기를 눌렀을 때 (확정된 필터가 넘어옴) */
+  onApply: (values: FilterValues) => void;
+};
+
+export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<DesignFilterKey>("category");
-  const [applied, setApplied] = useState<FilterValues>(EMPTY_FILTERS);
   const [draft, setDraft] = useState<FilterValues>(EMPTY_FILTERS);
 
   // 적용된 값이 하나라도 있는 필터만 검정
@@ -44,7 +50,7 @@ export default function DesignFilter() {
 
   // 적용하기: 임시 선택을 확정하고 닫기
   const handleApply = () => {
-    setApplied(draft);
+    onApply(draft);
     setOpen(false);
   };
 
