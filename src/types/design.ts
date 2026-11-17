@@ -8,3 +8,32 @@ export type Design = {
   height: number;
   bookmarked: boolean;
 };
+
+/* ───────────── API (GET /api/v1/designs) ───────────── */
+
+/** 디자인 목록 아이템 */
+export type DesignListItem = {
+  designId: number;
+  shopId: number;
+  name: string;
+  designImageUrl: string;
+  categoryCodes: string[];
+  shapeCodes: string[];
+  colorCodes: string[];
+  isLiked: boolean;
+};
+
+/** 디자인 목록 응답 (커서 방식) */
+export type DesignListResponse = {
+  items: DesignListItem[];
+  size: number;
+  hasNext: boolean;
+  nextCursor: number | null;
+};
+
+/** 디자인 상세 응답 (GET /api/v1/designs/{designId}) */
+export type DesignDetailResponse = DesignListItem & {
+  shopName: string;
+  shopAddress: string;
+  tagNames: string[];
+};

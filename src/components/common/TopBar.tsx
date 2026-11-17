@@ -9,7 +9,7 @@ type TopBarProps = HTMLAttributes<HTMLElement> & {
 export default function TopBar({ left, title, right, className = "", ...props }: TopBarProps) {
   return (
     <header
-      className={`px-medium grid h-14 w-full max-w-[375px] grid-cols-[24px_minmax(0,1fr)_24px] items-center ${className}`}
+      className={`px-medium grid h-14 w-full grid-cols-[24px_minmax(0,1fr)_24px] items-center ${className}`}
       {...props}
     >
       <span className="flex size-6 items-center justify-center">{left}</span>

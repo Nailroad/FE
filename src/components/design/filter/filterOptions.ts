@@ -15,7 +15,7 @@ import StilettoIcon from "@/components/icons/shape/StilettoIcon";
 
 /** 필터 바텀시트 탭별 선택지 */
 export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
-  category: ["웜톤", "자석", "프렌치", "시럽", "그라데이션", "글리터", "파츠", "도트", "캐릭터"],
+  category: ["원톤", "자석", "프렌치", "시럽", "그라데이션", "글리터", "파츠", "도트", "캐릭터"],
   color: [
     "레드",
     "오렌지",
@@ -32,6 +32,8 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "실버",
     "골드",
     "투명",
+    "누드",
+    "카키",
   ],
   shape: [
     "라운드",
@@ -73,6 +75,14 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "#봄웜네일",
     "#가을웜네일",
     "#비비드네일",
+    "#3D네일",
+    "#갸루네일",
+    "#쇠맛네일",
+    "#레오파드",
+    "#오리엔탈네일",
+    "#치크네일",
+    "#뉘앙스네일",
+    "#마블네일",
   ],
 };
 
@@ -94,6 +104,8 @@ export const COLOR_SWATCHES: Record<string, string> = {
   골드: "#d7b86d",
   // 피그마: 채우기 0% + 유리 효과 (빛 -45° / 90%) → 왼쪽 위 살짝 그늘, 오른쪽 아래 밝게 근사
   투명: "linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, rgba(255, 255, 255, 0) 55%)",
+  누드: "#ddb6ac",
+  카키: "#92966a",
 };
 
 /** 밝은 색: 회색 테두리 + 회색 체크 (피그마 "흰색 / 투명 / 베이지 기준") */
@@ -116,4 +128,54 @@ export const SHAPE_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>>
   "마운틴 피크": MountainPeakIcon,
   엣지: EdgeIcon,
   플레어: FlareIcon,
+};
+
+/**
+ * 화면 이름 → API 코드 (Swagger 기준)
+ * TODO: 해시태그는 백엔드에서 코드 목록 받으면 추가
+ */
+export const FILTER_CODES: Record<"category" | "color" | "shape", Record<string, string>> = {
+  category: {
+    원톤: "ONE_TONE",
+    자석: "MAGNET",
+    프렌치: "FRENCH",
+    시럽: "SYRUP",
+    그라데이션: "GRADATION",
+    글리터: "GLITTER",
+    파츠: "PARTS",
+    도트: "DOT",
+    캐릭터: "CHARACTER",
+  },
+  color: {
+    레드: "RED",
+    오렌지: "ORANGE",
+    옐로우: "YELLOW",
+    그린: "GREEN",
+    블루: "BLUE",
+    퍼플: "PURPLE",
+    핑크: "PINK",
+    화이트: "WHITE",
+    블랙: "BLACK",
+    브라운: "BROWN",
+    베이지: "BEIGE",
+    그레이: "GRAY",
+    실버: "SILVER",
+    골드: "GOLD",
+    투명: "TRANSPARENT",
+    누드: "NUDE",
+    카키: "KHAKI",
+  },
+  shape: {
+    라운드: "ROUND",
+    오벌: "OVAL",
+    스퀘어: "SQUARE",
+    "스퀘어 오벌": "SQUOVAL",
+    발레리나: "BALLERINA",
+    스틸레토: "STILETTO",
+    아몬드: "ALMOND",
+    "애로우 헤드": "ARROWHEAD",
+    "마운틴 피크": "MOUNTAIN_PEAK",
+    엣지: "EDGE",
+    플레어: "FLARE",
+  },
 };

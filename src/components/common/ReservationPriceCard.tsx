@@ -25,7 +25,7 @@ export default function ReservationPriceCard({
 }: ReservationPriceCardProps) {
   return (
     <article
-      className={`gap-large rounded-medium bg-gray-0 p-medium flex w-full max-w-[343px] items-end border border-gray-300 ${className}`}
+      className={`gap-large rounded-medium bg-gray-0 p-medium flex w-full items-end border border-gray-300 ${className}`}
       {...props}
     >
       <span className="rounded-medium flex size-24 shrink-0 overflow-hidden">{thumbnail}</span>

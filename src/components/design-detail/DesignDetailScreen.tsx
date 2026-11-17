@@ -69,7 +69,7 @@ export default function DesignDetailScreen({ design, detail }: DesignDetailScree
         </section>
       </div>
 
-      <div className="fixed inset-x-0 bottom-[max(34px,env(safe-area-inset-bottom))] z-40 mx-auto w-full max-w-[375px] px-medium">
+      <div className="fixed inset-x-0 bottom-[max(34px,env(safe-area-inset-bottom))] z-40 mx-auto w-full max-w-[480px] px-medium">
         {/* API 연동 전에는 요청을 보내지 않고, 화면 상태만 제공합니다. */}
         <Button aria-label="견적 요청하기">견적 요청하기</Button>
       </div>
