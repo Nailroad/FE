@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import type { Design } from "@/types/design";
@@ -22,6 +23,8 @@ type DesignCardProps = {
  */
 export default function DesignCard({ design, onBookmarkChange, onImageLoad }: DesignCardProps) {
   const { bookmarked } = design;
+  // 사진이 다 받아지면 서서히 나타나게 (회색 → 사진으로 갑자기 바뀌는 깜빡임 방지)
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <div
@@ -34,13 +37,14 @@ export default function DesignCard({ design, onBookmarkChange, onImageLoad }: De
           alt="네일 디자인"
           fill
           sizes="(max-width: 480px) 50vw, 240px"
-          className="object-cover"
+          className={`object-cover transition-opacity duration-200 ${loaded ? "opacity-100" : "opacity-0"}`}
           // S3 서명 URL은 15분마다 주소가 바뀌어서 Vercel 이미지 최적화를 거치면
           // 매번 새 이미지로 집계됨 → 무료 한도 초과. 최적화 없이 S3에서 바로 받음
           unoptimized
-          onLoad={(e) =>
-            onImageLoad?.(design.id, e.currentTarget.naturalWidth, e.currentTarget.naturalHeight)
-          }
+          onLoad={(e) => {
+            setLoaded(true);
+            onImageLoad?.(design.id, e.currentTarget.naturalWidth, e.currentTarget.naturalHeight);
+          }}
         />
       </Link>
 
