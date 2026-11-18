@@ -2,14 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import type { Design } from "@/types/design";
 
 type DesignCardProps = {
   design: Design;
-  /** 북마크를 눌렀을 때 (바뀐 북마크 상태가 넘어옴) */
+  /** 북마크를 눌렀을 때 (바뀔 북마크 상태가 넘어옴). 실제 저장은 부모가 함 */
   onBookmarkChange?: (id: number, bookmarked: boolean) => void;
   /** 사진이 불러와졌을 때 원본 크기 전달 (API에 사진 크기가 없어서 직접 잼) */
   onImageLoad?: (id: number, width: number, height: number) => void;
@@ -22,13 +21,7 @@ type DesignCardProps = {
  * - 사진을 누르면 디자인 상세로 이동, 북마크는 저장만 토글
  */
 export default function DesignCard({ design, onBookmarkChange, onImageLoad }: DesignCardProps) {
-  const [bookmarked, setBookmarked] = useState(design.bookmarked);
-
-  const handleBookmarkClick = () => {
-    const next = !bookmarked;
-    setBookmarked(next);
-    onBookmarkChange?.(design.id, next);
-  };
+  const { bookmarked } = design;
 
   return (
     <div
@@ -51,7 +44,7 @@ export default function DesignCard({ design, onBookmarkChange, onImageLoad }: De
       {/* 링크 밖에 둬서 북마크를 눌러도 상세로 이동하지 않음 */}
       <button
         type="button"
-        onClick={handleBookmarkClick}
+        onClick={() => onBookmarkChange?.(design.id, !bookmarked)}
         aria-label={bookmarked ? "북마크 해제" : "북마크"}
         aria-pressed={bookmarked}
         className={`absolute top-[13px] right-2.5 cursor-pointer ${bookmarked ? "text-gray-900" : "text-gray-0"}`}
