@@ -74,7 +74,8 @@ export default function DesignScreen() {
   return (
     <>
       <DesignFilter applied={applied} onApply={setApplied} />
-      <DesignTotalNumber />
+      {/* 전체 개수는 모든 페이지에 똑같이 오므로 첫 페이지 값 사용 */}
+      <DesignTotalNumber total={data?.pages[0]?.totalCount} />
 
       {isPending ? (
         <p className="typo-body2-medium py-large text-center text-gray-500">불러오는 중...</p>
