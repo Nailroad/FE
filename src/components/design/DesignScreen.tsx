@@ -30,7 +30,7 @@ export default function DesignScreen() {
       categoryCode: toCodes(applied.category, FILTER_CODES.category),
       colorCode: toCodes(applied.color, FILTER_CODES.color),
       shapeCode: toCodes(applied.shape, FILTER_CODES.shape),
-      // TODO: 해시태그(tagName)는 코드 목록 받으면 추가
+      tagName: toCodes(applied.hashtag, FILTER_CODES.hashtag),
     }),
     [applied],
   );
