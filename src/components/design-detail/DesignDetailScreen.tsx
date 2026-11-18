@@ -6,15 +6,25 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/common/Button";
 import TopBar from "@/components/common/TopBar";
 import NavArrowBackIcon from "@/components/icons/NavArrowBackIcon";
-import type { DesignDetail } from "@/mocks/design-detail";
-import type { Design } from "@/types/design";
-
-type DesignDetailScreenProps = {
-  design: Design;
-  detail: DesignDetail;
+type DesignColor = {
+  name: string;
+  hex: string;
 };
 
-export default function DesignDetailScreen({ design, detail }: DesignDetailScreenProps) {
+type DesignDetailScreenProps = {
+  designImageUrl: string;
+  categories: string[];
+  shapes: string[];
+  colors: DesignColor[];
+  hashtags: string[];
+  shop: {
+    name: string;
+    address: string;
+    profileImage: Parameters<typeof Image>[0]["src"];
+  };
+};
+
+export default function DesignDetailScreen({ designImageUrl, categories, shapes, colors, hashtags, shop }: DesignDetailScreenProps) {
   const router = useRouter();
 
   return (
@@ -31,7 +41,7 @@ export default function DesignDetailScreen({ design, detail }: DesignDetailScree
         <section className="px-medium gap-medium2 flex flex-col">
           <div className="relative h-[246px] overflow-hidden rounded-medium2 bg-gray-200">
             <Image
-              src={detail.detailImage ?? design.imageUrl}
+              src={designImageUrl}
               alt="선택한 네일 디자인"
               fill
               sizes="343px"
@@ -43,15 +53,15 @@ export default function DesignDetailScreen({ design, detail }: DesignDetailScree
           <article className="rounded-medium2 bg-gray-100 p-medium flex items-center justify-between">
             <div className="gap-medium flex items-center">
               <Image
-                src={detail.shop.profileImage}
+                src={shop.profileImage}
                 alt=""
                 width={40}
                 height={40}
                 className="size-10 rounded-full object-cover"
               />
               <div className="flex flex-col gap-0.5">
-                <strong className="typo-body2-semibold text-gray-900">{detail.shop.name}</strong>
-                <span className="typo-caption1-medium text-gray-600">{detail.shop.address}</span>
+                <strong className="typo-body2-semibold text-gray-900">{shop.name}</strong>
+                <span className="typo-caption1-medium text-gray-600">{shop.address}</span>
               </div>
             </div>
             <NavArrowBackIcon className="rotate-180" />
@@ -61,10 +71,10 @@ export default function DesignDetailScreen({ design, detail }: DesignDetailScree
         <section className="gap-large flex flex-col">
           <h1 className="px-medium typo-heading1-semibold text-gray-900">디자인 정보</h1>
           <div className="px-medium gap-medium2 flex flex-col">
-            <DetailRow title="카테고리" values={detail.categories} />
-            <DetailRow title="쉐입" values={detail.shapes} />
-            <ColorRow colors={detail.colors} />
-            <DetailRow title="해시태그" values={detail.hashtags} />
+            <DetailRow title="카테고리" values={categories} />
+            <DetailRow title="쉐입" values={shapes} />
+            <ColorRow colors={colors} />
+            <DetailRow title="해시태그" values={hashtags} />
           </div>
         </section>
       </div>
@@ -92,7 +102,7 @@ function DetailRow({ title, values }: { title: string; values: string[] }) {
   );
 }
 
-function ColorRow({ colors }: { colors: DesignDetail["colors"] }) {
+function ColorRow({ colors }: { colors: DesignColor[] }) {
   return (
     <div className="gap-medium flex flex-col">
       <h2 className="typo-body1-semibold text-gray-900">컬러</h2>

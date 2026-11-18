@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 
-import DesignDetailScreen from "@/components/design-detail/DesignDetailScreen";
-import { MOCK_DESIGN_DETAILS } from "@/mocks/design-detail";
-import { MOCK_DESIGNS } from "@/mocks/designs";
+import DesignDetailContainer from "@/components/design-detail/DesignDetailContainer";
 
 export const instant = false;
 
@@ -13,12 +11,10 @@ type DesignDetailPageProps = {
 export default async function DesignDetailPage({ params }: DesignDetailPageProps) {
   const { id } = await params;
   const designId = Number(id);
-  const design = MOCK_DESIGNS.find((item) => item.id === designId);
-  const detail = MOCK_DESIGN_DETAILS[designId];
 
-  if (!Number.isInteger(designId) || !design || !detail) {
+  if (!Number.isInteger(designId) || designId <= 0) {
     notFound();
   }
 
-  return <DesignDetailScreen design={design} detail={detail} />;
+  return <DesignDetailContainer designId={designId} />;
 }
