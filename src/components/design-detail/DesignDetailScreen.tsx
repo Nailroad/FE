@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/Button";
 import TopBar from "@/components/common/TopBar";
+import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import NavArrowBackIcon from "@/components/icons/NavArrowBackIcon";
 type DesignColor = {
   name: string;
@@ -17,6 +18,9 @@ type DesignDetailScreenProps = {
   shapes: string[];
   colors: DesignColor[];
   hashtags: string[];
+  /** 찜 여부 (로컬스토리지, 목록 카드와 연동) */
+  bookmarked: boolean;
+  onBookmarkClick: () => void;
   shop: {
     name: string;
     address: string;
@@ -24,7 +28,7 @@ type DesignDetailScreenProps = {
   };
 };
 
-export default function DesignDetailScreen({ designImageUrl, categories, shapes, colors, hashtags, shop }: DesignDetailScreenProps) {
+export default function DesignDetailScreen({ designImageUrl, categories, shapes, colors, hashtags, bookmarked, onBookmarkClick, shop }: DesignDetailScreenProps) {
   const router = useRouter();
 
   return (
@@ -33,6 +37,18 @@ export default function DesignDetailScreen({ designImageUrl, categories, shapes,
         left={
           <button type="button" aria-label="이전 페이지" onClick={() => router.back()} className="cursor-pointer">
             <NavArrowBackIcon />
+          </button>
+        }
+        right={
+          <button
+            type="button"
+            aria-label={bookmarked ? "북마크 해제" : "북마크"}
+            aria-pressed={bookmarked}
+            onClick={onBookmarkClick}
+            className="cursor-pointer text-gray-900"
+          >
+            {/* 미저장: 안쪽 비움 (아이콘 기본값은 안쪽이 24% 채워져 있어서 덮어씀) */}
+            <BookmarkIcon active={bookmarked} className={bookmarked ? "" : "[&_path]:fill-transparent"} />
           </button>
         }
       />

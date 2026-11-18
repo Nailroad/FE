@@ -3,7 +3,7 @@
 import NavArrowDownIcon from "@/components/icons/NavArrowDownIcon";
 
 type DesignTotalNumberProps = {
-  /** 전체 개수. 없으면 숨김 (API에 totalCount가 생기면 연결) */
+  /** 전체 개수 (API totalCount). 불러오는 중이라 없으면 숨김 */
   total?: number;
   sortLabel?: string;
   /** 정렬 버튼을 눌렀을 때 (추후 정렬 선택 열기) */

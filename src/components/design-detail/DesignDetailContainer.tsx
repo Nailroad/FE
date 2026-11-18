@@ -1,6 +1,7 @@
 "use client";
 
 import { COLOR_SWATCHES, FILTER_CODES } from "@/components/design/filter/filterOptions";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import { useDesignDetail } from "@/hooks/useDesignDetail";
 import shopProfileImage from "@/mocks/design-detail/shop-profile.png";
 
@@ -19,6 +20,7 @@ function getLabel(code: string, filter: keyof typeof FILTER_CODES) {
 
 export default function DesignDetailContainer({ designId }: DesignDetailContainerProps) {
   const { data, isPending, isError, refetch } = useDesignDetail(designId);
+  const { isBookmarked, toggle } = useBookmarks();
 
   if (isPending) {
     return <StatusMessage>디자인 정보를 불러오는 중이에요.</StatusMessage>;
@@ -48,6 +50,8 @@ export default function DesignDetailContainer({ designId }: DesignDetailContaine
       shapes={data.shapeCodes.map((code) => getLabel(code, "shape"))}
       colors={colors}
       hashtags={data.tagNames.map((tag) => TAG_LABELS[tag] ?? `#${tag}`)}
+      bookmarked={isBookmarked(designId)}
+      onBookmarkClick={() => toggle(designId)}
       shop={{
         name: data.shopName,
         address: FALLBACK_SHOP_ADDRESS,

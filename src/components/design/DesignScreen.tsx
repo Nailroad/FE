@@ -6,6 +6,7 @@ import DesignFilter, { EMPTY_FILTERS, type FilterValues } from "@/components/des
 import DesignMasonry from "@/components/design/DesignMasonry";
 import DesignTotalNumber from "@/components/design/DesignTotalNumber";
 import { FILTER_CODES } from "@/components/design/filter/filterOptions";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import { useDesigns } from "@/hooks/useDesigns";
 import type { Design } from "@/types/design";
 
@@ -30,7 +31,7 @@ export default function DesignScreen() {
       categoryCode: toCodes(applied.category, FILTER_CODES.category),
       colorCode: toCodes(applied.color, FILTER_CODES.color),
       shapeCode: toCodes(applied.shape, FILTER_CODES.shape),
-      // TODO: 해시태그(tagName)는 코드 목록 받으면 추가
+      tagName: toCodes(applied.hashtag, FILTER_CODES.hashtag),
     }),
     [applied],
   );
@@ -44,15 +45,18 @@ export default function DesignScreen() {
     setSizes((prev) => (prev[id] ? prev : { ...prev, [id]: { width, height } }));
   }, []);
 
+  // 찜은 로컬스토리지 기준 (API isLiked는 찜 API 나오기 전까지 사용 안 함)
+  const { isBookmarked, setBookmarked } = useBookmarks();
+
   const designs: Design[] = useMemo(
     () =>
       (data?.pages.flatMap((page) => page.items) ?? []).map((item) => ({
         id: item.designId,
         imageUrl: item.designImageUrl,
         ...(sizes[item.designId] ?? DEFAULT_SIZE),
-        bookmarked: item.isLiked,
+        bookmarked: isBookmarked(item.designId),
       })),
-    [data, sizes],
+    [data, sizes, isBookmarked],
   );
 
   // 맨 아래 표시용 요소가 화면에 들어오면 다음 페이지 요청
@@ -74,7 +78,8 @@ export default function DesignScreen() {
   return (
     <>
       <DesignFilter applied={applied} onApply={setApplied} />
-      <DesignTotalNumber />
+      {/* 전체 개수는 모든 페이지에 똑같이 오므로 첫 페이지 값 사용 */}
+      <DesignTotalNumber total={data?.pages[0]?.totalCount} />
 
       {isPending ? (
         <p className="typo-body2-medium py-large text-center text-gray-500">불러오는 중...</p>
@@ -87,7 +92,11 @@ export default function DesignScreen() {
           조건에 맞는 디자인이 없어요
         </p>
       ) : (
-        <DesignMasonry designs={designs} onImageLoad={handleImageLoad} />
+        <DesignMasonry
+          designs={designs}
+          onBookmarkChange={setBookmarked}
+          onImageLoad={handleImageLoad}
+        />
       )}
 
       <div ref={sentinelRef} aria-hidden="true" />
