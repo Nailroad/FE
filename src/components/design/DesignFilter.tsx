@@ -48,6 +48,9 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
     }));
   };
 
+  // 초기화: 4개 탭의 임시 선택을 전부 비움 (적용하기를 눌러야 목록에 반영)
+  const handleReset = () => setDraft(EMPTY_FILTERS);
+
   // 적용하기: 임시 선택을 확정하고 닫기
   const handleApply = () => {
     onApply(draft);
@@ -67,6 +70,7 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
         selected={draft}
         onToggle={handleToggle}
         onClose={handleClose}
+        onReset={handleReset}
         onApply={handleApply}
       />
     </>

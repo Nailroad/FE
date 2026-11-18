@@ -83,6 +83,7 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "#치크네일",
     "#뉘앙스네일",
     "#마블네일",
+    "#체크네일",
   ],
 };
 
@@ -132,9 +133,12 @@ export const SHAPE_ICONS: Record<string, ComponentType<SVGProps<SVGSVGElement>>>
 
 /**
  * 화면 이름 → API 코드 (Swagger 기준)
- * TODO: 해시태그는 백엔드에서 코드 목록 받으면 추가
+ * - 해시태그는 백엔드 화이트리스트 기준. 목록에 없는 코드를 보내면 400 에러
  */
-export const FILTER_CODES: Record<"category" | "color" | "shape", Record<string, string>> = {
+export const FILTER_CODES: Record<
+  "category" | "color" | "shape" | "hashtag",
+  Record<string, string>
+> = {
   category: {
     원톤: "ONE_TONE",
     자석: "MAGNET",
@@ -177,5 +181,42 @@ export const FILTER_CODES: Record<"category" | "color" | "shape", Record<string,
     "마운틴 피크": "MOUNTAIN_PEAK",
     엣지: "EDGE",
     플레어: "FLARE",
+  },
+  hashtag: {
+    "#가을네일": "AUTUMN_NAIL",
+    "#여리여리": "SOFT_NAIL",
+    "#웨딩네일": "WEDDING_NAIL",
+    "#심플네일": "SIMPLE_NAIL",
+    "#키치네일": "KITSCH_NAIL",
+    "#청순네일": "PURE_NAIL",
+    "#수채화네일": "WATERCOLOR_NAIL",
+    "#오로라네일": "AURORA_NAIL",
+    "#벚꽃네일": "CHERRY_BLOSSOM_NAIL",
+    "#과즙네일": "JUICY_NAIL",
+    "#뮤트네일": "MUTED_NAIL",
+    "#니트네일": "KNIT_NAIL",
+    "#겨울네일": "WINTER_NAIL",
+    "#연말네일": "YEAR_END_NAIL",
+    "#파티네일": "PARTY_NAIL",
+    "#발레코어네일": "BALLETCORE_NAIL",
+    "#보헤미안네일": "BOHEMIAN_NAIL",
+    "#낙서네일": "DOODLE_NAIL",
+    "#졸업네일": "GRADUATION_NAIL",
+    "#여행네일": "TRAVEL_NAIL",
+    "#페스티벌네일": "FESTIVAL_NAIL",
+    "#여쿨네일": "SUMMER_COOL_NAIL",
+    "#겨쿨네일": "WINTER_COOL_NAIL",
+    "#봄웜네일": "SPRING_WARM_NAIL",
+    "#가을웜네일": "AUTUMN_WARM_NAIL",
+    "#비비드네일": "VIVID_NAIL",
+    "#3D네일": "THREE_D_NAIL",
+    "#갸루네일": "GYARU_NAIL",
+    "#쇠맛네일": "METALLIC_NAIL",
+    "#레오파드": "LEOPARD_NAIL",
+    "#오리엔탈네일": "ORIENTAL_NAIL",
+    "#치크네일": "CHEEK_NAIL",
+    "#뉘앙스네일": "NUANCE_NAIL",
+    "#마블네일": "MARBLE_NAIL",
+    "#체크네일": "CHECK_NAIL",
   },
 };

@@ -29,6 +29,8 @@ export type DesignListResponse = {
   size: number;
   hasNext: boolean;
   nextCursor: number | null;
+  /** 필터가 적용된 전체 개수 (필터 없으면 전체 디자인 수) */
+  totalCount: number;
 };
 
 /** 디자인 상세 응답 (GET /api/v1/designs/{designId}) */
