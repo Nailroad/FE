@@ -28,14 +28,28 @@ type DesignDetailScreenProps = {
   };
 };
 
-export default function DesignDetailScreen({ designImageUrl, categories, shapes, colors, hashtags, bookmarked, onBookmarkClick, shop }: DesignDetailScreenProps) {
+export default function DesignDetailScreen({
+  designImageUrl,
+  categories,
+  shapes,
+  colors,
+  hashtags,
+  bookmarked,
+  onBookmarkClick,
+  shop,
+}: DesignDetailScreenProps) {
   const router = useRouter();
 
   return (
-    <main className="min-h-dvh bg-gray-0 pb-[110px]">
+    <main className="bg-gray-0 min-h-dvh pb-[110px]">
       <TopBar
         left={
-          <button type="button" aria-label="이전 페이지" onClick={() => router.back()} className="cursor-pointer">
+          <button
+            type="button"
+            aria-label="이전 페이지"
+            onClick={() => router.back()}
+            className="cursor-pointer"
+          >
             <NavArrowBackIcon />
           </button>
         }
@@ -47,15 +61,18 @@ export default function DesignDetailScreen({ designImageUrl, categories, shapes,
             onClick={onBookmarkClick}
             className="cursor-pointer text-gray-900"
           >
-            {/* 미저장: 안쪽 비움 (아이콘 기본값은 안쪽이 24% 채워져 있어서 덮어씀) */}
-            <BookmarkIcon active={bookmarked} className={bookmarked ? "" : "[&_path]:fill-transparent"} />
+            {/* 미저장: 안쪽 비움 (아이콘 기본값은 안쪽이 채워져 있어서 덮어씀) */}
+            <BookmarkIcon
+              active={bookmarked}
+              className={bookmarked ? "" : "[&_path]:fill-transparent"}
+            />
           </button>
         }
       />
 
       <div className="gap-xlarge flex flex-col">
         <section className="px-medium gap-medium2 flex flex-col">
-          <div className="relative h-[246px] overflow-hidden rounded-medium2 bg-gray-200">
+          <div className="rounded-medium2 relative h-[246px] overflow-hidden bg-gray-200">
             <Image
               src={designImageUrl}
               alt="선택한 네일 디자인"
@@ -63,10 +80,12 @@ export default function DesignDetailScreen({ designImageUrl, categories, shapes,
               sizes="343px"
               className="object-cover"
               priority
+              // S3 서명 URL은 주소가 계속 바뀌어 Vercel 이미지 최적화 한도를 소모함 → S3에서 바로 받음
+              unoptimized
             />
           </div>
 
-          <article className="rounded-medium2 bg-gray-100 p-medium flex items-center justify-between">
+          <article className="rounded-medium2 p-medium flex items-center justify-between bg-gray-100">
             <div className="gap-medium flex items-center">
               <Image
                 src={shop.profileImage}
@@ -95,7 +114,7 @@ export default function DesignDetailScreen({ designImageUrl, categories, shapes,
         </section>
       </div>
 
-      <div className="fixed inset-x-0 bottom-[max(34px,env(safe-area-inset-bottom))] z-40 mx-auto w-full max-w-[480px] px-medium">
+      <div className="px-medium fixed inset-x-0 bottom-[max(34px,env(safe-area-inset-bottom))] z-40 mx-auto w-full max-w-[480px]">
         {/* API 연동 전에는 요청을 보내지 않고, 화면 상태만 제공합니다. */}
         <Button aria-label="견적 요청하기">견적 요청하기</Button>
       </div>
@@ -109,7 +128,10 @@ function DetailRow({ title, values }: { title: string; values: string[] }) {
       <h2 className="typo-body1-semibold text-gray-900">{title}</h2>
       <div className="gap-medium flex flex-wrap">
         {values.map((value) => (
-          <span key={value} className="rounded-medium border border-gray-300 px-3 py-2 typo-body2-medium text-gray-900">
+          <span
+            key={value}
+            className="rounded-medium typo-body2-medium border border-gray-300 px-3 py-2 text-gray-900"
+          >
             {value}
           </span>
         ))}
@@ -124,7 +146,10 @@ function ColorRow({ colors }: { colors: DesignColor[] }) {
       <h2 className="typo-body1-semibold text-gray-900">컬러</h2>
       <div className="gap-medium flex flex-wrap">
         {colors.map((color) => (
-          <span key={color.name} className="rounded-medium gap-medium flex items-center border border-gray-300 px-3 py-2 typo-body2-medium text-gray-900">
+          <span
+            key={color.name}
+            className="rounded-medium gap-medium typo-body2-medium flex items-center border border-gray-300 px-3 py-2 text-gray-900"
+          >
             <i
               aria-hidden="true"
               className="size-5 rounded-full border border-gray-300"

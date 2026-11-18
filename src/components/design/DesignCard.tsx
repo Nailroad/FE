@@ -35,6 +35,9 @@ export default function DesignCard({ design, onBookmarkChange, onImageLoad }: De
           fill
           sizes="(max-width: 480px) 50vw, 240px"
           className="object-cover"
+          // S3 서명 URL은 15분마다 주소가 바뀌어서 Vercel 이미지 최적화를 거치면
+          // 매번 새 이미지로 집계됨 → 무료 한도 초과. 최적화 없이 S3에서 바로 받음
+          unoptimized
           onLoad={(e) =>
             onImageLoad?.(design.id, e.currentTarget.naturalWidth, e.currentTarget.naturalHeight)
           }
