@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 import Header from "@/components/common/Header";
+import SettingsIcon from "@/components/icons/SettingsIcon";
 import bell from "@/mocks/home/bell.svg";
 import logo from "@/mocks/home/logo.svg";
 
@@ -75,13 +76,23 @@ export default function HomeScreen({
           </Link>
         }
         right={
-          <Link
-            href={notificationHref}
-            aria-label="알림"
-            className="flex size-6 items-center justify-center text-gray-900"
-          >
-            <Image src={bell} alt="" width={24} height={24} priority unoptimized />
-          </Link>
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              href={notificationHref}
+              aria-label="알림"
+              className="flex size-6 items-center justify-center text-gray-900"
+            >
+              <Image src={bell} alt="" width={24} height={24} priority unoptimized />
+            </Link>
+            <button
+              type="button"
+              aria-label="설정"
+              className="flex size-6 items-center justify-center text-gray-900"
+              disabled
+            >
+              <SettingsIcon />
+            </button>
+          </div>
         }
       />
 
