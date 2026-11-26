@@ -1,11 +1,13 @@
 "use client";
 
+import { type ReactNode, useEffect, useRef, useState } from "react";
+
 import { COLOR_SWATCHES, FILTER_CODES } from "@/components/design/filter/filterOptions";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useDesignDetail } from "@/hooks/useDesignDetail";
 import shopProfileImage from "@/mocks/design-detail/shop-profile.png";
 
-import DesignDetailScreen from "./DesignDetailScreen";
+import DesignDetailScreen, { BOOKMARK_TOAST_DURATION_MS } from "./DesignDetailScreen";
 import { TAG_LABELS } from "./tagLabels";
 
 const FALLBACK_SHOP_ADDRESS = "서대문구 · 반경 5km";
@@ -20,7 +22,28 @@ function getLabel(code: string, filter: keyof typeof FILTER_CODES) {
 
 export default function DesignDetailContainer({ designId }: DesignDetailContainerProps) {
   const { data, isPending, isError, refetch } = useDesignDetail(designId);
-  const { isBookmarked, toggle } = useBookmarks();
+  const { isBookmarked, setBookmarked } = useBookmarks();
+  const bookmarked = isBookmarked(designId);
+  const [toastDesignId, setToastDesignId] = useState<number | null>(null);
+  const toastTimeout = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => window.clearTimeout(toastTimeout.current);
+  }, []);
+
+  function handleBookmarkClick() {
+    const nextBookmarked = !bookmarked;
+    setBookmarked(designId, nextBookmarked);
+
+    window.clearTimeout(toastTimeout.current);
+    setToastDesignId(nextBookmarked ? designId : null);
+    if (nextBookmarked) {
+      toastTimeout.current = window.setTimeout(
+        () => setToastDesignId(null),
+        BOOKMARK_TOAST_DURATION_MS,
+      );
+    }
+  }
 
   if (isPending) {
     return <StatusMessage>디자인 정보를 불러오는 중이에요.</StatusMessage>;
@@ -30,7 +53,11 @@ export default function DesignDetailContainer({ designId }: DesignDetailContaine
     return (
       <StatusMessage>
         <p>디자인 정보를 불러오지 못했어요.</p>
-        <button type="button" onClick={() => refetch()} className="typo-body2-semibold text-gray-900 underline">
+        <button
+          type="button"
+          onClick={() => refetch()}
+          className="typo-body2-semibold text-gray-900 underline"
+        >
           다시 시도
         </button>
       </StatusMessage>
@@ -50,8 +77,9 @@ export default function DesignDetailContainer({ designId }: DesignDetailContaine
       shapes={data.shapeCodes.map((code) => getLabel(code, "shape"))}
       colors={colors}
       hashtags={data.tagNames.map((tag) => TAG_LABELS[tag] ?? `#${tag}`)}
-      bookmarked={isBookmarked(designId)}
-      onBookmarkClick={() => toggle(designId)}
+      bookmarked={bookmarked}
+      onBookmarkClick={handleBookmarkClick}
+      showBookmarkToast={bookmarked && toastDesignId === designId}
       shop={{
         name: data.shopName,
         address: FALLBACK_SHOP_ADDRESS,
@@ -61,6 +89,10 @@ export default function DesignDetailContainer({ designId }: DesignDetailContaine
   );
 }
 
-function StatusMessage({ children }: { children: React.ReactNode }) {
-  return <main className="flex min-h-dvh flex-col items-center justify-center gap-3 bg-gray-0 px-medium typo-body2-medium text-gray-600">{children}</main>;
+function StatusMessage({ children }: { children: ReactNode }) {
+  return (
+    <main className="bg-gray-0 px-medium typo-body2-medium flex min-h-dvh flex-col items-center justify-center gap-3 text-gray-600">
+      {children}
+    </main>
+  );
 }
