@@ -35,6 +35,7 @@ export default function NavBar() {
 
   if (
     pathname === "/notifications" ||
+    isActivePath(pathname, "/custom-nail") ||
     isActivePath(pathname, "/magazine") ||
     /^\/design\/[^/]+$/.test(pathname)
   ) {

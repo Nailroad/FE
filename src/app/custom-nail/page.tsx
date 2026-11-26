@@ -1,3 +1,5 @@
+import CustomNailEmptyState from "@/components/custom-nail/CustomNailEmptyState";
+
 export default function CustomNailPage() {
-  return <main className="min-h-dvh bg-gray-0" />;
+  return <CustomNailEmptyState className="min-h-[min(508px,65svh)]" />;
 }
