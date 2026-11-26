@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/Button";
+import TopBar from "@/components/common/TopBar";
+import HeartIcon from "@/components/icons/HeartIcon";
 import NavArrowBackIcon from "@/components/icons/NavArrowBackIcon";
 
 export const BOOKMARK_TOAST_DURATION_MS = 2000;
@@ -18,6 +21,8 @@ type DesignDetailScreenProps = {
   shapes: string[];
   colors: DesignColor[];
   hashtags: string[];
+  bookmarked: boolean;
+  onBookmarkClick: () => void;
   showBookmarkToast: boolean;
   shop: {
     name: string;
@@ -32,11 +37,40 @@ export default function DesignDetailScreen({
   shapes,
   colors,
   hashtags,
+  bookmarked,
+  onBookmarkClick,
   showBookmarkToast,
   shop,
 }: DesignDetailScreenProps) {
+  const router = useRouter();
+
   return (
-    <div className="pt-2 pb-[110px]">
+    <main className="bg-gray-0 min-h-dvh pb-[110px]">
+      <TopBar
+        left={
+          <button
+            type="button"
+            aria-label="이전 페이지"
+            onClick={() => router.back()}
+            className="cursor-pointer"
+          >
+            <NavArrowBackIcon />
+          </button>
+        }
+        right={
+          <button
+            type="button"
+            aria-label={bookmarked ? "찜 해제" : "찜하기"}
+            aria-pressed={bookmarked}
+            onClick={onBookmarkClick}
+            className="cursor-pointer"
+          >
+            {/* 상세 헤더에서는 두 상태에 같은 도형을 쓰고 채우기 색만 바꿉니다. */}
+            <HeartIcon active className={bookmarked ? undefined : "[&>path]:fill-gray-900/24"} />
+          </button>
+        }
+      />
+
       <div className="gap-xlarge flex flex-col">
         <section className="px-medium gap-medium2 flex flex-col">
           <div className="rounded-medium2 relative h-[246px] overflow-hidden bg-gray-200">
@@ -98,7 +132,7 @@ export default function DesignDetailScreen({
         {/* API 연동 전에는 요청을 보내지 않고, 화면 상태만 제공합니다. */}
         <Button aria-label="견적 요청하기">견적 요청하기</Button>
       </div>
-    </div>
+    </main>
   );
 }
 
