@@ -90,14 +90,13 @@ export default function HomeScreen({
             >
               <Image src={bell} alt="" width={24} height={24} priority unoptimized />
             </Link>
-            <button
-              type="button"
+            <Link
+              href="/settings"
               aria-label="설정"
               className="flex size-6 items-center justify-center text-gray-900"
-              disabled
             >
               <SettingsIcon />
-            </button>
+            </Link>
           </div>
         }
       />

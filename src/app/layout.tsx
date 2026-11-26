@@ -3,8 +3,6 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 
-import NavBar from "@/components/common/NavBar";
-
 import Providers from "./providers";
 
 const suit = localFont({
@@ -31,14 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="bg-gray-200">
         {/* 모바일 웹앱 컨테이너: 480px까지는 화면 폭에 맞춰 늘어나고, 그보다 넓으면 가운데 고정 (바깥은 회색 배경) */}
         <div className="bg-background relative mx-auto flex min-h-dvh w-full max-w-[480px] flex-col">
-          {/* 하단 네브바(60px + 아래 34px + 여유 16px)에 내용이 가리지 않도록 아래 여백 확보 */}
-          <div className="flex flex-1 flex-col pb-[calc(76px+max(34px,env(safe-area-inset-bottom)))]">
-            <Providers>{children}</Providers>
-          </div>
-
-          <div className="fixed inset-x-0 bottom-0 z-50 mx-auto w-full max-w-[480px] px-4 pb-[max(34px,env(safe-area-inset-bottom))]">
-            <NavBar />
-          </div>
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>
