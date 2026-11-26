@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 
 import Header from "@/components/common/Header";
 import SettingsIcon from "@/components/icons/SettingsIcon";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import bell from "@/mocks/home/bell.svg";
 import logo from "@/mocks/home/logo.svg";
 
@@ -38,6 +39,7 @@ type HomeScreenProps = {
   banners: HomeBanner[];
   nailItems: HomeNailItem[];
   magazineItems: HomeMagazineItem[];
+  isLoggedIn: boolean;
   notificationHref?: string;
 };
 
@@ -56,8 +58,11 @@ export default function HomeScreen({
   banners,
   nailItems,
   magazineItems,
+  isLoggedIn,
   notificationHref = "/notifications",
 }: HomeScreenProps) {
+  const { ids: bookmarkedDesignIds } = useBookmarks();
+  const showPersonalizedNails = isLoggedIn && bookmarkedDesignIds.length > 0 && nailItems.length > 0;
   const visibleBanners = banners.length > 1 ? [banners[0], banners[1], banners[0]] : banners;
   const bannerCarouselRef = useRef<HTMLDivElement>(null);
 
@@ -128,15 +133,34 @@ export default function HomeScreen({
 
       <section className="mt-[40px]">
         <SectionHeader title="맞춤형 네일" href="/custom-nail" />
-        <div className="mt-[12px] flex gap-medium overflow-x-auto px-4 [scrollbar-width:none]">
-          {nailItems.map((item) => (
-            <Link key={item.id} href={item.href} aria-label={item.title} className="w-[120px] shrink-0">
-              <div className="relative aspect-square overflow-hidden rounded-medium bg-gray-100">
-                <Image src={item.imageSrc} alt="" fill sizes="120px" className="object-cover" />
-              </div>
+        {showPersonalizedNails ? (
+          <div className="mt-[12px] flex gap-medium overflow-x-auto px-4 [scrollbar-width:none]">
+            {nailItems.map((item) => (
+              <Link key={item.id} href={item.href} aria-label={item.title} className="w-[120px] shrink-0">
+                <div className="relative aspect-square overflow-hidden rounded-medium bg-gray-100">
+                  <Image src={item.imageSrc} alt="" fill sizes="120px" className="object-cover" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-3 flex flex-col items-center gap-4 px-4 py-6 text-center">
+            <div className="flex flex-col gap-0.5">
+              <p className="typo-body2-semibold text-gray-900">아직 맞춤형 네일이 없어요</p>
+              <p className="typo-caption1-medium text-gray-600">
+                다양한 디자인을 둘러보고
+                <br />
+                취향에 맞는 네일을 발견해 보세요.
+              </p>
+            </div>
+            <Link
+              href="/design"
+              className="typo-caption1-semibold rounded-medium bg-gray-900 px-2 py-1.5 text-gray-50"
+            >
+              디자인 둘러보기
             </Link>
-          ))}
-        </div>
+          </div>
+        )}
       </section>
 
       <section className="mt-[40px]">
