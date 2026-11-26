@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import BookmarkIcon from "@/components/icons/BookmarkIcon";
+import HeartIcon from "@/components/icons/HeartIcon";
 import type { Design } from "@/types/design";
 
 type DesignCardProps = {
@@ -48,16 +48,15 @@ export default function DesignCard({ design, onBookmarkChange, onImageLoad }: De
         />
       </Link>
 
-      {/* 링크 밖에 둬서 북마크를 눌러도 상세로 이동하지 않음 */}
+      {/* 링크 밖에 둬서 하트를 눌러도 상세로 이동하지 않음 */}
       <button
         type="button"
         onClick={() => onBookmarkChange?.(design.id, !bookmarked)}
-        aria-label={bookmarked ? "북마크 해제" : "북마크"}
+        aria-label={bookmarked ? "찜 해제" : "찜하기"}
         aria-pressed={bookmarked}
-        className={`absolute top-[13px] right-2.5 cursor-pointer ${bookmarked ? "text-gray-900" : "text-gray-0"}`}
+        className="absolute top-[11.75px] right-[9px] cursor-pointer"
       >
-        {/* 미저장: 테두리 흰색 + 안쪽 #222 24% (아이콘 기본값은 안쪽도 글자색이라 덮어씀) */}
-        <BookmarkIcon active={bookmarked} className={bookmarked ? "" : "[&_path]:fill-gray-900"} />
+        <HeartIcon active={bookmarked} />
       </button>
     </div>
   );
