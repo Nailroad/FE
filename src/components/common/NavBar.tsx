@@ -33,7 +33,11 @@ function isActivePath(pathname: string, href: string) {
 export default function NavBar() {
   const pathname = usePathname();
 
-  if (pathname === "/notifications" || /^\/design\/[^/]+$/.test(pathname)) {
+  if (
+    pathname === "/notifications" ||
+    isActivePath(pathname, "/magazine") ||
+    /^\/design\/[^/]+$/.test(pathname)
+  ) {
     return null;
   }
 
