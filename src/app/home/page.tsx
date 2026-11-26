@@ -59,5 +59,13 @@ const magazineItems: HomeMagazineItem[] = [
 ];
 
 export default function HomePage() {
-  return <HomeScreen banners={banners} nailItems={nailItems} magazineItems={magazineItems} />;
+  // 인증 연동 전에는 비로그인 상태로 표시합니다.
+  return (
+    <HomeScreen
+      banners={banners}
+      nailItems={nailItems}
+      magazineItems={magazineItems}
+      isLoggedIn={false}
+    />
+  );
 }

@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 import Header from "@/components/common/Header";
+import CustomNailEmptyState from "@/components/custom-nail/CustomNailEmptyState";
+import SettingsIcon from "@/components/icons/SettingsIcon";
+import { useBookmarks } from "@/hooks/useBookmarks";
 import bell from "@/mocks/home/bell.svg";
 import logo from "@/mocks/home/logo.svg";
 
@@ -37,6 +40,7 @@ type HomeScreenProps = {
   banners: HomeBanner[];
   nailItems: HomeNailItem[];
   magazineItems: HomeMagazineItem[];
+  isLoggedIn: boolean;
   notificationHref?: string;
 };
 
@@ -55,8 +59,11 @@ export default function HomeScreen({
   banners,
   nailItems,
   magazineItems,
+  isLoggedIn,
   notificationHref = "/notifications",
 }: HomeScreenProps) {
+  const { ids: bookmarkedDesignIds } = useBookmarks();
+  const showPersonalizedNails = isLoggedIn && bookmarkedDesignIds.length > 0 && nailItems.length > 0;
   const visibleBanners = banners.length > 1 ? [banners[0], banners[1], banners[0]] : banners;
   const bannerCarouselRef = useRef<HTMLDivElement>(null);
 
@@ -75,13 +82,23 @@ export default function HomeScreen({
           </Link>
         }
         right={
-          <Link
-            href={notificationHref}
-            aria-label="알림"
-            className="flex size-6 items-center justify-center text-gray-900"
-          >
-            <Image src={bell} alt="" width={24} height={24} priority unoptimized />
-          </Link>
+          <div className="flex shrink-0 items-center gap-2">
+            <Link
+              href={notificationHref}
+              aria-label="알림"
+              className="flex size-6 items-center justify-center text-gray-900"
+            >
+              <Image src={bell} alt="" width={24} height={24} priority unoptimized />
+            </Link>
+            <button
+              type="button"
+              aria-label="설정"
+              className="flex size-6 items-center justify-center text-gray-900"
+              disabled
+            >
+              <SettingsIcon />
+            </button>
+          </div>
         }
       />
 
@@ -116,16 +133,23 @@ export default function HomeScreen({
       </section>
 
       <section className="mt-[40px]">
-        <SectionHeader title="맞춤형 네일" href="/custom-nail" />
-        <div className="mt-[12px] flex gap-medium overflow-x-auto px-4 [scrollbar-width:none]">
-          {nailItems.map((item) => (
-            <Link key={item.id} href={item.href} aria-label={item.title} className="w-[120px] shrink-0">
-              <div className="relative aspect-square overflow-hidden rounded-medium bg-gray-100">
-                <Image src={item.imageSrc} alt="" fill sizes="120px" className="object-cover" />
-              </div>
-            </Link>
-          ))}
-        </div>
+        <SectionHeader
+          title="맞춤형 네일"
+          href={showPersonalizedNails ? "/custom-nail/recommendations" : "/custom-nail"}
+        />
+        {showPersonalizedNails ? (
+          <div className="mt-[12px] flex gap-medium overflow-x-auto px-4 [scrollbar-width:none]">
+            {nailItems.map((item) => (
+              <Link key={item.id} href={item.href} aria-label={item.title} className="w-[120px] shrink-0">
+                <div className="relative aspect-square overflow-hidden rounded-medium bg-gray-100">
+                  <Image src={item.imageSrc} alt="" fill sizes="120px" className="object-cover" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <CustomNailEmptyState className="mt-3" />
+        )}
       </section>
 
       <section className="mt-[40px]">
