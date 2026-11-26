@@ -16,7 +16,7 @@ type Magazine = {
   title: string;
   image: StaticImageData;
   body: string;
-  showGalleryPreview?: boolean;
+  galleryImages?: readonly (StaticImageData | string)[];
 };
 
 const MOCK_MAGAZINES = {
@@ -29,7 +29,6 @@ const MOCK_MAGAZINES = {
     title: "말랑말랑 피치코어",
     image: cover1,
     body: "게시글 내용입니다 게시글 내용입니다게시글 내용입니다게시글 내용입니다게시글 내용입니다게시글 내용입니다 게시글 내용입니다",
-    showGalleryPreview: true,
   },
   "3": {
     title: "심플한 네일, 근데 심심한 건 싫어!",
