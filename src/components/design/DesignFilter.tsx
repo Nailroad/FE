@@ -29,8 +29,10 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
   const [tab, setTab] = useState<DesignFilterKey>("category");
   const [draft, setDraft] = useState<FilterValues>(EMPTY_FILTERS);
 
-  // 적용된 값이 하나라도 있는 필터만 검정
-  const activeKeys = DESIGN_FILTERS.map(({ key }) => key).filter((key) => applied[key].length > 0);
+  // 필터별 적용된 개수 (1개 이상인 칩만 검정 + 개수 표시)
+  const counts = Object.fromEntries(
+    DESIGN_FILTERS.map(({ key }) => [key, applied[key].length]),
+  ) as Record<DesignFilterKey, number>;
 
   // 칩 클릭: 지금 적용된 값으로 임시 선택을 시작하고, 누른 칩의 탭으로 시트 열기
   const handleFilterClick = (key: DesignFilterKey) => {
@@ -62,7 +64,7 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
 
   return (
     <>
-      <DesignFilterBar activeKeys={activeKeys} onFilterClick={handleFilterClick} />
+      <DesignFilterBar counts={counts} onFilterClick={handleFilterClick} />
       <DesignFilterSheet
         open={open}
         tab={tab}
