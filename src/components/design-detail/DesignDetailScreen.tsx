@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 import Button from "@/components/common/Button";
-import TopBar from "@/components/common/TopBar";
-import BookmarkIcon from "@/components/icons/BookmarkIcon";
 import NavArrowBackIcon from "@/components/icons/NavArrowBackIcon";
+
+export const BOOKMARK_TOAST_DURATION_MS = 2000;
+
 type DesignColor = {
   name: string;
   hex: string;
@@ -18,9 +18,7 @@ type DesignDetailScreenProps = {
   shapes: string[];
   colors: DesignColor[];
   hashtags: string[];
-  /** 찜 여부 (로컬스토리지, 목록 카드와 연동) */
-  bookmarked: boolean;
-  onBookmarkClick: () => void;
+  showBookmarkToast: boolean;
   shop: {
     name: string;
     address: string;
@@ -34,42 +32,11 @@ export default function DesignDetailScreen({
   shapes,
   colors,
   hashtags,
-  bookmarked,
-  onBookmarkClick,
+  showBookmarkToast,
   shop,
 }: DesignDetailScreenProps) {
-  const router = useRouter();
-
   return (
-    <main className="bg-gray-0 min-h-dvh pb-[110px]">
-      <TopBar
-        left={
-          <button
-            type="button"
-            aria-label="이전 페이지"
-            onClick={() => router.back()}
-            className="cursor-pointer"
-          >
-            <NavArrowBackIcon />
-          </button>
-        }
-        right={
-          <button
-            type="button"
-            aria-label={bookmarked ? "북마크 해제" : "북마크"}
-            aria-pressed={bookmarked}
-            onClick={onBookmarkClick}
-            className="cursor-pointer text-gray-900"
-          >
-            {/* 미저장: 안쪽 비움 (아이콘 기본값은 안쪽이 채워져 있어서 덮어씀) */}
-            <BookmarkIcon
-              active={bookmarked}
-              className={bookmarked ? "" : "[&_path]:fill-transparent"}
-            />
-          </button>
-        }
-      />
-
+    <div className="pt-2 pb-[110px]">
       <div className="gap-xlarge flex flex-col">
         <section className="px-medium gap-medium2 flex flex-col">
           <div className="rounded-medium2 relative h-[246px] overflow-hidden bg-gray-200">
@@ -115,10 +82,23 @@ export default function DesignDetailScreen({
       </div>
 
       <div className="px-medium fixed inset-x-0 bottom-[max(34px,env(safe-area-inset-bottom))] z-40 mx-auto w-full max-w-[480px]">
+        <div
+          role="status"
+          className="pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2"
+        >
+          {showBookmarkToast && (
+            <p
+              className="rounded-medium typo-body2-medium flex h-10 items-center bg-gray-800 px-4 whitespace-nowrap text-white motion-safe:animate-[toast-fade-out_ease-out_forwards]"
+              style={{ animationDuration: `${BOOKMARK_TOAST_DURATION_MS}ms` }}
+            >
+              찜에 추가되었습니다.
+            </p>
+          )}
+        </div>
         {/* API 연동 전에는 요청을 보내지 않고, 화면 상태만 제공합니다. */}
         <Button aria-label="견적 요청하기">견적 요청하기</Button>
       </div>
-    </main>
+    </div>
   );
 }
 

@@ -15,3 +15,14 @@
 body {
   color: var(--foreground);
 }
+
+@keyframes toast-fade-out {
+  0%,
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
