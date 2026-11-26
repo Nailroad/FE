@@ -43,7 +43,7 @@ export default function DesignFilterSheet({
   return (
     <BottomSheet open={open} onClose={onClose} label="디자인 필터">
       <div className="gap-xlarge flex min-h-0 flex-1 flex-col self-stretch">
-        <div className="gap-medium flex flex-col self-stretch">
+        <div className="flex flex-col self-stretch">
           <div role="tablist" className="px-medium gap-medium flex">
             {DESIGN_FILTERS.map(({ key, label }) => {
               const active = key === tab;
@@ -54,11 +54,18 @@ export default function DesignFilterSheet({
                   role="tab"
                   aria-selected={active}
                   onClick={() => onTabChange(key)}
-                  className={`cursor-pointer transition-colors ${
+                  className={`pb-medium relative cursor-pointer transition-colors ${
                     active ? "typo-body1-semibold text-gray-900" : "typo-body1-medium text-gray-500"
                   }`}
                 >
                   {label}
+                  {/* 지금 보는 탭 */}
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-x-0 -bottom-px h-0.5 bg-gray-900"
+                    />
+                  )}
                 </button>
               );
             })}
