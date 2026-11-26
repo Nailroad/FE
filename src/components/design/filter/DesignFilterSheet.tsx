@@ -87,6 +87,7 @@ export default function DesignFilterSheet({
               options={FILTER_OPTIONS.hashtag}
               selected={selected.hashtag}
               onToggle={(value) => onToggle("hashtag", value)}
+              centered
             />
           )}
           {tab === "shape" && (
