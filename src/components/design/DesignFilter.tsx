@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 
 import DesignFilterBar, {
   DESIGN_FILTERS,
@@ -33,13 +33,15 @@ function toOrderedTags(values: FilterValues, order: DesignFilterKey[]) {
  * - draft: 시트 안에서 고르는 중인 임시 값. 적용하기 없이 닫으면 버려짐
  */
 type DesignFilterProps = {
+  /** 칩 줄 위에 같이 고정할 헤더 */
+  header?: ReactNode;
   /** 적용된 필터 */
   applied: FilterValues;
   /** 적용하기를 눌렀을 때 (확정된 필터가 넘어옴) */
   onApply: (values: FilterValues) => void;
 };
 
-export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
+export default function DesignFilter({ header, applied, onApply }: DesignFilterProps) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<DesignFilterKey>("category");
   const [draft, setDraft] = useState<FilterValues>(EMPTY_FILTERS);
@@ -91,7 +93,16 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
 
   return (
     <>
-      <DesignFilterBar counts={counts} onFilterClick={handleFilterClick} />
+      {/*
+        스크롤해도 헤더 + 필터 칩 줄은 화면 위에 고정 (sticky)
+        - 흰 배경으로 아래 카드가 비치지 않게 가림, z-20으로 카드 위에 (네브바 z-50보다는 아래)
+        - pb + 같은 크기의 -mb: 고정됐을 때만 칩 아래 12px 흰 여백이 생기고, 평소 간격은 그대로
+        - 바텀시트는 고정 영역 밖에 둬야 네브바보다 위에 뜸
+      */}
+      <div className="bg-background gap-medium2 sticky top-0 z-20 -mb-3 flex flex-col pb-3">
+        {header}
+        <DesignFilterBar counts={counts} onFilterClick={handleFilterClick} />
+      </div>
       <DesignFilterSheet
         open={open}
         tab={tab}
