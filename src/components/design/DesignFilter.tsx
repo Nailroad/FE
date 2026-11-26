@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 
 import DesignFilterBar, {
   DESIGN_FILTERS,
@@ -13,47 +13,78 @@ export type FilterValues = Record<DesignFilterKey, string[]>;
 export const EMPTY_FILTERS: FilterValues = { category: [], color: [], shape: [], hashtag: [] };
 
 /**
+ * 버튼 위 칩 줄 순서
+ * - 같은 탭끼리 묶고, 나중에 생긴 묶음이 앞 (order: 묶음이 생긴 순서, 최신이 앞)
+ * - 묶음 안에서는 나중에 누른 게 앞 (값 배열은 누른 순서대로 쌓여 있으므로 뒤집음)
+ * - order에 없는 탭(새로고침 등으로 기록이 없을 때)은 탭 순서대로 뒤에 붙임
+ */
+function toOrderedTags(values: FilterValues, order: DesignFilterKey[]) {
+  const keys = [
+    ...order,
+    ...DESIGN_FILTERS.map(({ key }) => key).filter((key) => !order.includes(key)),
+  ].filter((key) => values[key].length > 0);
+
+  return keys.flatMap((key) => [...values[key]].reverse().map((value) => ({ key, value })));
+}
+
+/**
  * 필터 칩 줄 + 필터 바텀시트
  * - applied: 적용된 필터 (부모가 관리, 적용하기를 눌렀을 때만 바뀜). 값이 있는 칩만 검정
  * - draft: 시트 안에서 고르는 중인 임시 값. 적용하기 없이 닫으면 버려짐
  */
 type DesignFilterProps = {
+  /** 칩 줄 위에 같이 고정할 헤더 */
+  header?: ReactNode;
   /** 적용된 필터 */
   applied: FilterValues;
   /** 적용하기를 눌렀을 때 (확정된 필터가 넘어옴) */
   onApply: (values: FilterValues) => void;
 };
 
-export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
+export default function DesignFilter({ header, applied, onApply }: DesignFilterProps) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<DesignFilterKey>("category");
   const [draft, setDraft] = useState<FilterValues>(EMPTY_FILTERS);
+  // 칩 줄 묶음 순서 (고르는 중 / 적용된 것). 적용할 때 기억해뒀다가 다시 열면 이어서 사용
+  const [order, setOrder] = useState<DesignFilterKey[]>([]);
+  const [appliedOrder, setAppliedOrder] = useState<DesignFilterKey[]>([]);
 
-  // 적용된 값이 하나라도 있는 필터만 검정
-  const activeKeys = DESIGN_FILTERS.map(({ key }) => key).filter((key) => applied[key].length > 0);
+  // 필터별 적용된 개수 (1개 이상인 칩만 검정 + 개수 표시)
+  const counts = Object.fromEntries(
+    DESIGN_FILTERS.map(({ key }) => [key, applied[key].length]),
+  ) as Record<DesignFilterKey, number>;
 
   // 칩 클릭: 지금 적용된 값으로 임시 선택을 시작하고, 누른 칩의 탭으로 시트 열기
   const handleFilterClick = (key: DesignFilterKey) => {
     setDraft(applied);
+    setOrder(appliedOrder);
     setTab(key);
     setOpen(true);
   };
 
   const handleToggle = (key: DesignFilterKey, value: string) => {
-    setDraft((prev) => ({
-      ...prev,
-      [key]: prev[key].includes(value)
-        ? prev[key].filter((v) => v !== value)
-        : [...prev[key], value],
-    }));
+    const removing = draft[key].includes(value);
+    const next = removing ? draft[key].filter((v) => v !== value) : [...draft[key], value];
+    setDraft({ ...draft, [key]: next });
+
+    // 묶음 순서: 이 탭의 첫 선택이면 맨 앞에 새 묶음, 다 지워지면 묶음 제거
+    if (!removing && draft[key].length === 0) {
+      setOrder((prev) => [key, ...prev.filter((k) => k !== key)]);
+    } else if (next.length === 0) {
+      setOrder((prev) => prev.filter((k) => k !== key));
+    }
   };
 
   // 초기화: 4개 탭의 임시 선택을 전부 비움 (적용하기를 눌러야 목록에 반영)
-  const handleReset = () => setDraft(EMPTY_FILTERS);
+  const handleReset = () => {
+    setDraft(EMPTY_FILTERS);
+    setOrder([]);
+  };
 
   // 적용하기: 임시 선택을 확정하고 닫기
   const handleApply = () => {
     onApply(draft);
+    setAppliedOrder(order);
     setOpen(false);
   };
 
@@ -62,13 +93,23 @@ export default function DesignFilter({ applied, onApply }: DesignFilterProps) {
 
   return (
     <>
-      <DesignFilterBar activeKeys={activeKeys} onFilterClick={handleFilterClick} />
+      {/*
+        스크롤해도 헤더 + 필터 칩 줄은 화면 위에 고정 (sticky)
+        - 흰 배경으로 아래 카드가 비치지 않게 가림, z-20으로 카드 위에 (네브바 z-50보다는 아래)
+        - pb + 같은 크기의 -mb: 고정됐을 때만 칩 아래 12px 흰 여백이 생기고, 평소 간격은 그대로
+        - 바텀시트는 고정 영역 밖에 둬야 네브바보다 위에 뜸
+      */}
+      <div className="bg-background gap-medium2 sticky top-0 z-20 -mb-3 flex flex-col pb-3">
+        {header}
+        <DesignFilterBar counts={counts} onFilterClick={handleFilterClick} />
+      </div>
       <DesignFilterSheet
         open={open}
         tab={tab}
         onTabChange={setTab}
         selected={draft}
         onToggle={handleToggle}
+        tags={toOrderedTags(draft, order)}
         onClose={handleClose}
         onReset={handleReset}
         onApply={handleApply}

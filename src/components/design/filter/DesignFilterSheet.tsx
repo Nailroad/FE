@@ -1,11 +1,14 @@
 "use client";
 
+import { Fragment } from "react";
+
 import Button from "@/components/common/Button";
 import { DESIGN_FILTERS, type DesignFilterKey } from "@/components/design/DesignFilterBar";
 import BottomSheet from "@/components/design/filter/BottomSheet";
 import ChipOptions from "@/components/design/filter/ChipOptions";
 import ColorOptions from "@/components/design/filter/ColorOptions";
 import { FILTER_OPTIONS } from "@/components/design/filter/filterOptions";
+import FilterTagChip from "@/components/design/filter/FilterTagChip";
 import ShapeOptions from "@/components/design/filter/ShapeOptions";
 
 type DesignFilterSheetProps = {
@@ -17,6 +20,8 @@ type DesignFilterSheetProps = {
   selected: Record<DesignFilterKey, string[]>;
   /** 선택지를 눌렀을 때 (선택 ↔ 해제) */
   onToggle: (tab: DesignFilterKey, value: string) => void;
+  /** 버튼 위에 보여줄 고른 항목들 (보여줄 순서대로) */
+  tags?: { key: DesignFilterKey; value: string }[];
   onClose: () => void;
   onReset?: () => void;
   onApply?: () => void;
@@ -28,6 +33,7 @@ export default function DesignFilterSheet({
   onTabChange,
   selected,
   onToggle,
+  tags = [],
   onClose,
   onReset,
   onApply,
@@ -81,6 +87,7 @@ export default function DesignFilterSheet({
               options={FILTER_OPTIONS.hashtag}
               selected={selected.hashtag}
               onToggle={(value) => onToggle("hashtag", value)}
+              centered
             />
           )}
           {tab === "shape" && (
@@ -92,18 +99,35 @@ export default function DesignFilterSheet({
         </div>
       </div>
 
-      {/* 하단 버튼 */}
-      <div className="px-medium gap-medium flex self-stretch">
-        <button
-          type="button"
-          onClick={onReset}
-          className="typo-body1-medium rounded-medium2 flex h-[52px] w-[89px] shrink-0 cursor-pointer items-center justify-center border border-gray-300 p-2.5 text-gray-900"
-        >
-          초기화
-        </button>
-        <Button onClick={onApply} className="flex-1 cursor-pointer">
-          적용하기
-        </Button>
+      <div className="gap-medium2 flex flex-col self-stretch">
+        {/* 고른 항목 칩 줄: 없으면 숨김, 많으면 가로 스크롤. ✕(칩)를 누르면 해제 */}
+        {tags.length > 0 && (
+          <div className="px-medium gap-medium2 flex [scrollbar-width:none] overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {tags.map(({ key, value }, i) => (
+              <Fragment key={`${key}-${value}`}>
+                {/* 탭(묶음)이 바뀌는 자리에 세로 구분선 */}
+                {i > 0 && tags[i - 1].key !== key && (
+                  <span aria-hidden="true" className="h-4 w-px shrink-0 self-center bg-gray-300" />
+                )}
+                <FilterTagChip label={value} onClick={() => onToggle(key, value)} />
+              </Fragment>
+            ))}
+          </div>
+        )}
+
+        {/* 하단 버튼 */}
+        <div className="px-medium gap-medium flex">
+          <button
+            type="button"
+            onClick={onReset}
+            className="typo-body1-medium rounded-medium2 flex h-[52px] w-[89px] shrink-0 cursor-pointer items-center justify-center border border-gray-300 p-2.5 text-gray-900"
+          >
+            초기화
+          </button>
+          <Button onClick={onApply} className="flex-1 cursor-pointer">
+            적용하기
+          </Button>
+        </div>
       </div>
     </BottomSheet>
   );

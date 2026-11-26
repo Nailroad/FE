@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from "react";
 
+import metalTexture from "@/assets/images/gold_silver.png";
 import type { DesignFilterKey } from "@/components/design/DesignFilterBar";
 import AlmondIcon from "@/components/icons/shape/AlmondIcon";
 import ArrowHeadIcon from "@/components/icons/shape/ArrowHeadIcon";
@@ -34,6 +35,7 @@ export const FILTER_OPTIONS: Record<DesignFilterKey, readonly string[]> = {
     "투명",
     "누드",
     "카키",
+    "혼합",
   ],
   shape: [
     "라운드",
@@ -107,7 +109,15 @@ export const COLOR_SWATCHES: Record<string, string> = {
   투명: "linear-gradient(135deg, rgba(0, 0, 0, 0.06) 0%, rgba(255, 255, 255, 0) 55%)",
   누드: "#ddb6ac",
   카키: "#92966a",
+  // 피그마: 레드 → 옐로우 → 그린 → 블루 → 퍼플 (위 → 아래)
+  혼합: "linear-gradient(180deg, #e44e5d 0%, #f4d35e 25%, #48b981 50%, #5488db 75%, #9874cf 100%)",
 };
+
+/*
+ * 금속 색: 금속 질감 사진 위에 색을 곱하기(multiply)로 입힘 (피그마: 사진 + 색 필터)
+ */
+export const METAL_COLORS = new Set(["실버", "골드"]);
+export const METAL_TEXTURE_URL = metalTexture.src;
 
 /** 밝은 색: 회색 테두리 + 회색 체크 (피그마 "흰색 / 투명 / 베이지 기준") */
 export const LIGHT_COLORS = new Set(["화이트", "투명", "베이지"]);

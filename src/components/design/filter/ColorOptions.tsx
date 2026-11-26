@@ -3,6 +3,8 @@ import {
   FILTER_OPTIONS,
   GLASS_SHADOW,
   LIGHT_COLORS,
+  METAL_COLORS,
+  METAL_TEXTURE_URL,
 } from "@/components/design/filter/filterOptions";
 
 type ColorOptionsProps = {
@@ -22,6 +24,7 @@ export default function ColorOptions({ selected, onToggle }: ColorOptionsProps) 
       {FILTER_OPTIONS.color.map((color) => {
         const active = selected.includes(color);
         const light = LIGHT_COLORS.has(color);
+        const metal = METAL_COLORS.has(color);
 
         return (
           <button
@@ -36,7 +39,10 @@ export default function ColorOptions({ selected, onToggle }: ColorOptionsProps) 
                 light ? "border border-gray-300" : ""
               }`}
               style={{
-                background: COLOR_SWATCHES[color],
+                background: metal
+                  ? `url(${METAL_TEXTURE_URL}) center / cover, ${COLOR_SWATCHES[color]}`
+                  : COLOR_SWATCHES[color],
+                backgroundBlendMode: metal ? "multiply" : undefined,
                 boxShadow: color === "투명" ? GLASS_SHADOW : undefined,
               }}
             >

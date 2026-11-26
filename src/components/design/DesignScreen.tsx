@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
 import DesignFilter, { EMPTY_FILTERS, type FilterValues } from "@/components/design/DesignFilter";
 import DesignMasonry from "@/components/design/DesignMasonry";
@@ -21,7 +21,12 @@ const toCodes = (labels: string[], codes: Record<string, string>) =>
  * - 맨 아래에 닿으면 다음 페이지 요청 (무한 스크롤)
  * - 사진 크기를 먼저 알아낸 뒤 페이지(20개) 단위로 한 번에 배치 → 카드가 열 사이로 튀지 않음
  */
-export default function DesignScreen() {
+type DesignScreenProps = {
+  /** 맨 위 헤더. 필터 칩 줄과 함께 스크롤 시 상단 고정됨 */
+  header?: ReactNode;
+};
+
+export default function DesignScreen({ header }: DesignScreenProps) {
   const [applied, setApplied] = useState<FilterValues>(EMPTY_FILTERS);
 
   // 같은 탭 안은 OR, 다른 탭끼리는 AND → 백엔드가 처리
@@ -91,7 +96,7 @@ export default function DesignScreen() {
 
   return (
     <>
-      <DesignFilter applied={applied} onApply={setApplied} />
+      <DesignFilter header={header} applied={applied} onApply={setApplied} />
       {/* 전체 개수는 모든 페이지에 똑같이 오므로 첫 페이지 값 사용 */}
       <DesignTotalNumber total={data?.pages[0]?.totalCount} />
 
