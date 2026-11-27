@@ -4,11 +4,11 @@ import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
+import nailroadLogo from "@/assets/icons/nailroad-logo.svg";
 import Header from "@/components/common/Header";
 import CustomNailEmptyState from "@/components/custom-nail/CustomNailEmptyState";
 import BellIcon from "@/components/icons/BellIcon";
-import NailroadLogo from "@/components/icons/nailroadlogo";
-import SettingsIcon from "@/components/icons/SettingsIcon";
+import SettingIcon from "@/components/icons/SettingIcon";
 import { useBookmarks } from "@/hooks/useBookmarks";
 
 export type HomeBanner = {
@@ -78,7 +78,14 @@ export default function HomeScreen({
       <Header
         left={
           <Link href="/home" className="flex h-[38px] w-[104px] items-center">
-            <NailroadLogo />
+            <Image
+              src={nailroadLogo}
+              alt="Nailroad"
+              width={104}
+              height={38}
+              unoptimized
+              loading="eager"
+            />
           </Link>
         }
         right={
@@ -95,7 +102,7 @@ export default function HomeScreen({
               aria-label="설정"
               className="flex size-6 items-center justify-center text-gray-900"
             >
-              <SettingsIcon />
+              <SettingIcon />
             </Link>
           </div>
         }
