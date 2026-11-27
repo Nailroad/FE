@@ -6,10 +6,10 @@ import { useEffect, useRef } from "react";
 
 import Header from "@/components/common/Header";
 import CustomNailEmptyState from "@/components/custom-nail/CustomNailEmptyState";
+import BellIcon from "@/components/icons/BellIcon";
+import NailroadLogo from "@/components/icons/nailroadlogo";
 import SettingsIcon from "@/components/icons/SettingsIcon";
 import { useBookmarks } from "@/hooks/useBookmarks";
-import bell from "@/mocks/home/bell.svg";
-import logo from "@/mocks/home/logo.svg";
 
 export type HomeBanner = {
   id: string;
@@ -78,7 +78,7 @@ export default function HomeScreen({
       <Header
         left={
           <Link href="/home" className="flex h-[38px] w-[104px] items-center">
-            <Image src={logo} alt="Nailroad" width={104} height={38} priority unoptimized />
+            <NailroadLogo />
           </Link>
         }
         right={
@@ -88,7 +88,7 @@ export default function HomeScreen({
               aria-label="알림"
               className="flex size-6 items-center justify-center text-gray-900"
             >
-              <Image src={bell} alt="" width={24} height={24} priority unoptimized />
+              <BellIcon />
             </Link>
             <Link
               href="/settings"
